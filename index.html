@@ -42,11 +42,16 @@ input,select,textarea{outline:none;font-family:inherit}
 .sidebar-toggle:hover{background:rgba(255,255,255,.15);color:#fff}
 .sidebar.collapsed .sidebar-toggle{margin-left:0}
 .sidebar-nav{flex:1;padding:12px 0;overflow:hidden}
-.nav-section-label{font-size:10px;color:#444;letter-spacing:.15em;text-transform:uppercase;font-weight:700;padding:14px 20px 6px;white-space:nowrap;overflow:hidden}
-.sidebar.collapsed .nav-section-label{opacity:0;pointer-events:none;padding:14px 0 6px}
-.nav-item{display:flex;align-items:center;gap:12px;padding:10px 20px;color:#888;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;border-left:2.5px solid transparent;white-space:nowrap}
+.nav-section-label{font-size:10px;color:#3a3a3a;letter-spacing:.13em;text-transform:uppercase;font-weight:600;padding:14px 20px 4px;white-space:nowrap;overflow:hidden;opacity:.45}
+.sidebar.collapsed .nav-section-label{opacity:0;pointer-events:none;height:0;padding:0;overflow:hidden}
+.nav-divider{height:1px;background:rgba(255,255,255,.07);margin:8px 16px}
+.sidebar.collapsed .nav-divider{margin:8px 10px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:9px 20px;color:#888;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;border-left:2.5px solid transparent;white-space:nowrap}
 .nav-item:hover{color:#ddd;background:rgba(255,255,255,.04);border-left-color:rgba(192,57,43,.4)}
 .nav-item.active{color:#fff;background:rgba(255,255,255,.06);border-left-color:#c0392b}
+.nav-item.nav-sub{padding:7px 20px 7px 28px;font-size:12px;color:#666}
+.nav-item.nav-sub:hover{color:#ddd}
+.sidebar.collapsed .nav-item.nav-sub{padding:9px 0;justify-content:center}
 .nav-icon{font-size:17px;width:20px;text-align:center;flex-shrink:0}
 .sidebar.collapsed .nav-label{display:none}
 .sidebar.collapsed .nav-item{padding:11px 0;justify-content:center;border-left-color:transparent}
@@ -88,44 +93,45 @@ input,select,textarea{outline:none;font-family:inherit}
 .section-label::after{content:"";flex:1;height:1px;background:#e8e8e8}
 
 /* ── FILTERS ─────────────────────────────────────── */
-.filters-bar{display:flex;gap:8px;margin-bottom:18px;align-items:center;flex-wrap:nowrap;overflow-x:auto}
-.filter-select{padding:7px 10px;background:#fff;border:1.5px solid #e8e8e8;border-radius:8px;color:#555;font-size:12px;min-width:130px;flex-shrink:0}
-.search-input{padding:7px 12px;background:#fff;border:1.5px solid #e8e8e8;border-radius:8px;color:#111;font-size:12px;width:200px;flex-shrink:0}
-.search-input:focus,.filter-select:focus{border-color:#c0392b}
-.view-sort-select{padding:7px 10px;background:#fff;border:1.5px solid #e8e8e8;border-radius:8px;color:#555;font-size:12px;margin-left:auto;flex-shrink:0}
-.view-sort-select:focus{border-color:#c0392b}
+.filters-bar{display:flex;gap:8px;margin-bottom:18px;align-items:center;flex-wrap:wrap}
+.filter-select{padding:7px 10px;background:#fff;border:1.5px solid #e8e8e8;border-radius:8px;color:#555;font-size:12px;height:34px;flex-shrink:0;cursor:pointer}
+.filter-select:focus{border-color:#c0392b;outline:none}
+.search-wrap{position:relative;flex-shrink:0}
+.search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#bbb;pointer-events:none}
+.search-input{padding:7px 12px 7px 32px;background:#fff;border:1.5px solid #e8e8e8;border-radius:8px;color:#111;font-size:12px;width:190px;height:34px}
+.search-input:focus{border-color:#c0392b;outline:none}
+.view-sort-select{padding:7px 10px;background:#fff;border:1.5px solid #e8e8e8;border-radius:8px;color:#555;font-size:12px;margin-left:auto;flex-shrink:0;height:34px;cursor:pointer}
+.view-sort-select:focus{border-color:#c0392b;outline:none}
 
 /* ────────────────────────────────────────────────────
    DROPBOX-STYLE FILE TREE
 ──────────────────────────────────────────────────── */
 .file-tree{background:#fff;border:1.5px solid #e8e8e8;border-radius:14px;overflow:hidden}
 
-/* Column grid: name | location | dept | shared | date | actions */
-.tree-cols{display:grid;grid-template-columns:minmax(220px,2.2fr) 90px 110px 110px 100px 148px}
+/* Shared column grid — applied to header, folder rows, doc rows */
+:root{--tree-cols: minmax(200px,1fr) 100px 120px 120px 110px 150px}
+.tree-cols{display:grid;grid-template-columns:var(--tree-cols);align-items:center}
 
-.tree-head{padding:10px 16px;background:#fafafa;border-bottom:1.5px solid #e8e8e8}
-.tree-th{font-size:11px;color:#aaa;font-weight:700;text-transform:uppercase;letter-spacing:.07em}
+.tree-head{background:#fafafa;border-bottom:1.5px solid #e8e8e8;padding:10px 16px}
+.tree-th{font-size:11px;color:#aaa;font-weight:700;text-transform:uppercase;letter-spacing:.07em;white-space:nowrap;overflow:hidden}
 
 /* Folder row */
 .folder-row{border-bottom:1px solid #f0f0f0;cursor:pointer;transition:background .12s;user-select:none}
 .folder-row:last-child{border-bottom:none}
 .folder-row:hover{background:#fafafa}
 .folder-row.is-open > .folder-row-inner{background:#fafafa}
-.folder-row-inner{padding:10px 16px;display:flex;align-items:center}
+.folder-row-inner{display:grid;grid-template-columns:var(--tree-cols);align-items:center;padding:10px 16px}
 
-.folder-toggle-col{min-width:220px;display:flex;align-items:center;gap:8px;flex:2.2}
+.folder-name-cell{display:flex;align-items:center;gap:6px;overflow:hidden;min-width:0}
 .chevron{width:16px;height:16px;flex-shrink:0;color:#bbb;transition:transform .18s;display:flex;align-items:center;justify-content:center}
 .chevron svg{display:block}
 .folder-row.is-open .chevron{transform:rotate(90deg)}
-.folder-icon-col{width:18px;height:18px;flex-shrink:0;color:#888;display:flex;align-items:center;justify-content:center}
-.folder-label{font-size:13px;font-weight:600;color:#111;margin-left:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.folder-count{font-size:11px;color:#bbb;margin-left:8px;white-space:nowrap}
-.folder-meta-col{width:90px;font-size:12px;color:#aaa}
-.folder-dept-col{width:110px}
-.folder-shared-col{width:110px}
-.folder-date-col{width:100px}
-.folder-actions-col{width:148px;display:flex;align-items:center;gap:2px;opacity:0;transition:opacity .15s;justify-content:flex-end;padding-right:4px}
-.folder-row-inner:hover .folder-actions-col{opacity:1}
+.folder-icon{width:18px;height:18px;flex-shrink:0;color:#888;display:flex;align-items:center;justify-content:center}
+.folder-label{font-size:13px;font-weight:600;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.folder-count{font-size:11px;color:#bbb;margin-left:4px;white-space:nowrap;flex-shrink:0}
+.folder-cell{font-size:12px;color:#888;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.folder-actions-cell{display:flex;align-items:center;gap:2px;opacity:0;transition:opacity .15s;justify-content:flex-end}
+.folder-row-inner:hover .folder-actions-cell{opacity:1}
 
 /* Permission pill */
 .perm-pill{font-size:10px;padding:2px 8px;border-radius:5px;font-weight:600;display:inline-block;white-space:nowrap}
@@ -140,23 +146,21 @@ input,select,textarea{outline:none;font-family:inherit}
 .folder-children-inner{border-top:1px solid #f0f0f0;border-left:3px solid #e8e8e8;margin-left:32px}
 .folder-empty{padding:11px 20px;font-size:12px;color:#ccc;font-style:italic}
 
-/* Document row inside folder */
+/* Document row */
 .doc-row{border-bottom:1px solid #f5f5f5;transition:background .12s}
 .doc-row:last-child{border-bottom:none}
 .doc-row:hover{background:#fafafa}
 .doc-row.dragging{opacity:.3;background:#f5f4f0}
-.doc-row-inner{padding:9px 16px 9px 6px;display:flex;align-items:center}
+.doc-row-inner{display:grid;grid-template-columns:var(--tree-cols);align-items:center;padding:9px 16px 9px 10px}
 
-.doc-name-col{flex:2.2;min-width:220px;padding-right:12px}
-.doc-name{font-size:13px;font-weight:500;color:#222;line-height:1.3}
+.doc-name-cell{display:flex;flex-direction:column;justify-content:center;overflow:hidden;min-width:0;padding-right:8px}
+.doc-name{font-size:13px;font-weight:500;color:#222;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .doc-meta{font-size:11px;color:#bbb;margin-top:2px}
 .new-tag{font-size:9px;padding:1px 6px;border-radius:4px;background:#edfbf3;color:#27ae60;font-weight:700;border:1px solid #c3efd4;margin-left:6px;vertical-align:middle;white-space:nowrap}
-.doc-loc-col{width:90px;font-size:12px;color:#666}
-.doc-dept-col{width:110px}
-.doc-shared-col{width:110px;display:flex;align-items:center;gap:3px}
-.doc-date-col{width:100px;font-size:12px;color:#888}
-.doc-actions-col{width:148px;display:flex;align-items:center;gap:1px;opacity:0;transition:opacity .15s;justify-content:flex-end}
-.doc-row:hover .doc-actions-col{opacity:1}
+.doc-cell{font-size:12px;color:#666;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.doc-shared-cell{display:flex;align-items:center;gap:3px}
+.doc-actions-cell{display:flex;align-items:center;gap:1px;opacity:0;transition:opacity .15s;justify-content:flex-end}
+.doc-row:hover .doc-actions-cell{opacity:1}
 
 /* Dept tags */
 .dept-tag{font-size:11px;padding:2px 8px;border-radius:8px;font-weight:600;display:inline-block;white-space:nowrap}
@@ -210,16 +214,54 @@ input,select,textarea{outline:none;font-family:inherit}
 .ann-admin-card.featured{border-left:3.5px solid #c0392b}
 .ann-admin-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:8px}
 .ann-admin-title{font-size:14px;font-weight:700;color:#111}
-.ann-admin-meta{font-size:11px;color:#bbb;margin-top:2px}
+.ann-admin-meta{font-size:11px;color:#bbb;margin-top:2px;display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+.ann-expiry{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:600;white-space:nowrap}
+.ann-expiry.exp-ok{color:#bbb}
+.ann-expiry.exp-soon{color:#e67e22}
+.ann-expiry.exp-past{color:#bbb;text-decoration:line-through}
 .ann-admin-body{font-size:13px;color:#777;line-height:1.6}
 .ann-featured-tag{font-size:10px;background:#fff5f3;color:#c0392b;border:1px solid #f0d5d0;padding:2px 8px;border-radius:6px;font-weight:700;white-space:nowrap}
+.ann-pin-tag{font-size:10px;background:#fff8e6;color:#e67e22;border:1px solid #fde8b0;padding:2px 8px;border-radius:6px;font-weight:700;white-space:nowrap;display:inline-flex;align-items:center;gap:3px}
+.btn-pin{width:26px;height:26px;border-radius:6px;border:none;background:none;display:flex;align-items:center;justify-content:center;color:#ccc;transition:all .15s;cursor:pointer;flex-shrink:0}
+.btn-pin:hover{background:#fff8e6;color:#e67e22}
+.btn-pin.pinned{color:#e67e22}
+.ann-expired-tag{font-size:10px;background:#f5f5f5;color:#bbb;border:1px solid #e8e8e8;padding:2px 8px;border-radius:6px;font-weight:700;white-space:nowrap}
+.ann-audience{display:flex;align-items:center;flex-wrap:wrap;gap:5px;margin-top:10px;padding-top:10px;border-top:1px solid #f0f0f0}
+.aud-label{font-size:10px;color:#bbb;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-right:2px}
+.aud-chip{font-size:11px;font-weight:600;padding:2px 8px;border-radius:6px;display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.aud-loc{background:#eef4ff;color:#2980b9}
+.aud-dept{background:#f3eeff;color:#8e44ad}
+.aud-user{background:#edfbf3;color:#27ae60}
+.aud-all{background:#f5f5f5;color:#888}
+/* Toggle switch */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#f8f8f8;border:1.5px solid #e8e8e8;border-radius:8px;margin-bottom:10px}
+.toggle-row-label{font-size:13px;color:#333;font-weight:500;display:flex;align-items:center;gap:7px}
+.toggle-switch{position:relative;width:38px;height:22px;flex-shrink:0}
+.toggle-switch input{opacity:0;width:0;height:0}
+.toggle-track{position:absolute;inset:0;background:#e0e0e0;border-radius:22px;cursor:pointer;transition:background .2s}
+.toggle-switch input:checked + .toggle-track{background:#c0392b}
+.toggle-track::after{content:"";position:absolute;width:16px;height:16px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toggle-switch input:checked + .toggle-track::after{transform:translateX(16px)}
+/* Notif chips */
+.notif-chips{display:flex;gap:8px;flex-wrap:wrap}
+.notif-chip{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border:1.5px solid #e8e8e8;border-radius:8px;font-size:12px;font-weight:600;color:#666;cursor:pointer;background:#fff;transition:all .15s;user-select:none}
+.notif-chip:hover{border-color:#bbb;color:#333}
+.notif-chip.active{border-color:#c0392b;background:#fff5f3;color:#c0392b}
+.notif-chip svg{flex-shrink:0}
 .ann-form-card{background:#fff;border:1.5px solid #e8e8e8;border-radius:14px;padding:24px}
 .ann-form-title{font-size:14px;font-weight:700;color:#111;margin-bottom:18px}
 
 /* ── USERS ───────────────────────────────────────── */
 .users-table{background:#fff;border:1.5px solid #e8e8e8;border-radius:14px;overflow:hidden}
-.users-head{display:grid;grid-template-columns:2fr 2fr 1fr 1fr 100px;background:#fafafa;border-bottom:1.5px solid #e8e8e8;padding:10px 20px}
-.users-row{display:grid;grid-template-columns:2fr 2fr 1fr 1fr 100px;padding:13px 20px;border-bottom:1px solid #f0f0f0;align-items:center;transition:background .12s}
+.users-head{display:grid;grid-template-columns:minmax(160px,2fr) minmax(90px,1fr) minmax(110px,1.1fr) minmax(90px,1fr) minmax(90px,1fr) minmax(80px,.8fr) 150px;background:#fafafa;border-bottom:1.5px solid #e8e8e8;padding:10px 20px;gap:0 8px}
+.users-row{display:grid;grid-template-columns:minmax(160px,2fr) minmax(90px,1fr) minmax(110px,1.1fr) minmax(90px,1fr) minmax(90px,1fr) minmax(80px,.8fr) 150px;padding:12px 20px;border-bottom:1px solid #f0f0f0;align-items:center;transition:background .12s;gap:0 8px}
+.th{font-size:11px;color:#aaa;font-weight:700;text-transform:uppercase;letter-spacing:.07em;line-height:1.35;word-break:break-word;hyphens:auto}
+/* Export dropdown */
+.export-dropdown{position:relative}
+.export-menu{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#fff;border:1.5px solid #e8e8e8;border-radius:10px;padding:6px;min-width:130px;box-shadow:0 6px 20px rgba(0,0,0,.1);z-index:200}
+.export-dropdown:hover .export-menu{display:block}
+.export-item{display:flex;align-items:center;gap:8px;padding:8px 10px;font-size:12px;color:#444;font-weight:500;cursor:pointer;border-radius:6px;transition:background .12s}
+.export-item:hover{background:#f5f4f0;color:#111}
 .users-row:last-child{border-bottom:none}
 .users-row:hover{background:#fafafa}
 .user-name-cell{display:flex;align-items:center;gap:10px}
@@ -322,11 +364,13 @@ input,select,textarea{outline:none;font-family:inherit}
     <div class="login-welcome">Acceso Admin</div>
     <div class="login-sub">Gestiona documentos, usuarios y avisos</div>
     <div class="admin-badge">🔐 &nbsp;Área restringida — Solo administradores</div>
+    <form onsubmit="doLogin();return false;">
     <label class="field-label">Usuario</label>
-    <input class="field-input" type="text" id="inp-user" value="admin@juansrestaurants.com"/>
+    <input class="field-input" type="text" id="inp-user" value="admin@juansrestaurants.com" autocomplete="username"/>
     <label class="field-label">Contraseña</label>
-    <input class="field-input" type="password" id="inp-pass" value="••••••••" style="margin-bottom:24px"/>
-    <button class="login-btn" onclick="doLogin()">Entrar al Panel</button>
+    <input class="field-input" type="password" id="inp-pass" value="admin123" autocomplete="current-password" style="margin-bottom:24px"/>
+    <button class="login-btn" type="submit">Entrar al Panel</button>
+    </form>
   </div>
 </div>
 
@@ -344,13 +388,48 @@ input,select,textarea{outline:none;font-family:inherit}
     </button>
   </div>
   <nav class="sidebar-nav">
-    <div class="nav-section-label">Principal</div>
-    <div class="nav-item active" onclick="switchSection('docs',this)"><span class="nav-icon">📁</span><span class="nav-label">Documentos</span></div>
-    <div class="nav-item" onclick="switchSection('upload',this)"><span class="nav-icon">⬆</span><span class="nav-label">Subir Archivo</span></div>
+
+    <!-- FILE MANAGER -->
+    <div class="nav-section-label">File Manager</div>
+    <div class="nav-item active" onclick="switchSection('docs',this)">
+      <span class="nav-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>
+      <span class="nav-label">Documentos</span>
+    </div>
+    <div class="nav-item nav-sub" onclick="openFolderModal()">
+      <span class="nav-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg></span>
+      <span class="nav-label">Crear Carpeta</span>
+    </div>
+    <div class="nav-item nav-sub" onclick="openUploadModal()">
+      <span class="nav-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></span>
+      <span class="nav-label">Subir Archivo</span>
+    </div>
+
+    <div class="nav-divider"></div>
+
+    <!-- COMUNICACIÓN -->
     <div class="nav-section-label">Comunicación</div>
-    <div class="nav-item" onclick="switchSection('announcements',this)"><span class="nav-icon">📣</span><span class="nav-label">Avisos</span></div>
-    <div class="nav-section-label">Gestión</div>
-    <div class="nav-item" onclick="switchSection('users',this)"><span class="nav-icon">👥</span><span class="nav-label">Usuarios</span></div>
+    <div class="nav-item" onclick="switchSection('announcements',this)">
+      <span class="nav-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
+      <span class="nav-label">Avisos</span>
+    </div>
+    <div class="nav-item nav-sub" onclick="openAnnModal()">
+      <span class="nav-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>
+      <span class="nav-label">Nuevo Aviso</span>
+    </div>
+
+    <div class="nav-divider"></div>
+
+    <!-- RECURSOS HUMANOS -->
+    <div class="nav-section-label">Recursos Humanos</div>
+    <div class="nav-item" onclick="switchSection('users',this)">
+      <span class="nav-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+      <span class="nav-label">Usuarios</span>
+    </div>
+    <div class="nav-item nav-sub" onclick="openUserModal()">
+      <span class="nav-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg></span>
+      <span class="nav-label">Nuevo Usuario</span>
+    </div>
+
   </nav>
   <div class="sidebar-footer">
     <div class="admin-user-card">
@@ -367,11 +446,11 @@ input,select,textarea{outline:none;font-family:inherit}
 <!-- ═══ DOCUMENTOS ═══ -->
 <div class="tab-panel active" id="section-docs">
   <div class="topbar">
-    <div class="topbar-left"><div class="topbar-title">Documentos</div></div>
+    <div class="topbar-left"><div class="topbar-title" style="display:flex;align-items:center;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Documentos</div></div>
     <div class="topbar-actions">
       <button class="btn-secondary">Exportar</button>
-      <button class="btn-secondary" onclick="openFolderModal()">Nueva Carpeta</button>
-      <button class="btn-primary" onclick="switchSection('upload',null)">+ Subir Archivo</button>
+      <button class="btn-secondary" onclick="openFolderModal()" style="display:inline-flex;align-items:center;gap:6px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> Nueva Carpeta</button>
+      <button class="btn-primary" onclick="openUploadModal()" style="display:inline-flex;align-items:center;gap:6px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Subir Archivo</button>
     </div>
   </div>
   <div class="page">
@@ -400,15 +479,26 @@ input,select,textarea{outline:none;font-family:inherit}
 
     <!-- Filters -->
     <div class="filters-bar">
-      <input class="search-input" id="filter-search" placeholder="Buscar documentos..." oninput="renderTree()"/>
-      <select class="filter-select" id="filter-dept" onchange="renderTree()">
-        <option value="">Todos los departamentos</option>
-        <option>Cocina</option><option>RRHH</option><option>Marketing</option><option>Operaciones</option><option>Finanzas</option>
+      <!-- Search with icon -->
+      <div class="search-wrap">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input class="search-input" id="filter-search" placeholder="Buscar documentos..." oninput="renderTree()"/>
+      </div>
+      <!-- Folder filter -->
+      <select class="filter-select" id="filter-folder" onchange="renderTree()">
+        <option value="">Todas las carpetas</option>
       </select>
+      <!-- Location filter -->
       <select class="filter-select" id="filter-loc" onchange="renderTree()">
         <option value="">Todas las locaciones</option>
         <option>Long Beach</option><option>Gulfport</option><option>Biloxi</option>
       </select>
+      <!-- Dept filter -->
+      <select class="filter-select" id="filter-dept" onchange="renderTree()">
+        <option value="">Todos los departamentos</option>
+        <option>Cocina</option><option>RRHH</option><option>Marketing</option><option>Operaciones</option><option>Finanzas</option>
+      </select>
+      <!-- View / sort -->
       <select class="view-sort-select" id="sort-select" onchange="renderTree()">
         <option value="date-desc">Más recientes primero</option>
         <option value="date-asc">Más antiguos primero</option>
@@ -455,7 +545,7 @@ input,select,textarea{outline:none;font-family:inherit}
         <!-- ORDER: Guardar en, Locación, Departamento, Acceso por puesto, Acceso por usuario -->
         <label class="form-label" style="margin-top:0">Guardar en carpeta</label>
         <div class="location-picker">
-          <div class="loc-breadcrumb" id="upload-bc"><span class="bc-item current">Raíz</span></div>
+          <div class="loc-breadcrumb" id="upload-bc"><span class="bc-item current">Juan's</span></div>
           <div class="loc-folders" id="upload-loc-list"></div>
         </div>
         <label class="form-label">Locación</label>
@@ -484,118 +574,218 @@ input,select,textarea{outline:none;font-family:inherit}
 <!-- ═══ AVISOS ═══ -->
 <div class="tab-panel" id="section-announcements">
   <div class="topbar">
-    <div class="topbar-left"><div class="topbar-title">Avisos</div></div>
-    <div class="topbar-actions"><button class="btn-primary" onclick="openAnnModal()">+ Nuevo Aviso</button></div>
+    <div class="topbar-left"><div class="topbar-title" style="display:flex;align-items:center;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg> Avisos</div></div>
+    <div class="topbar-actions"><button class="btn-primary" onclick="openAnnModal()" style="display:inline-flex;align-items:center;gap:6px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Nuevo Aviso</button></div>
   </div>
   <div class="page">
-    <div class="ann-admin-layout">
-      <div>
-        <div class="section-label">Avisos publicados</div>
-        <div class="ann-list">
-          <div class="ann-admin-card featured">
-            <div class="ann-admin-top">
-              <div><div class="ann-admin-title">¡Bienvenido al Portal Interno de Juan's Restaurants!</div><div class="ann-admin-meta">📅 1 Jun 2025 · Dirección General</div></div>
-              <span class="ann-featured-tag">⭐ DESTACADO</span>
-            </div>
-            <div class="ann-admin-body">Mensaje principal de bienvenida visible en la pantalla de inicio de todos los empleados.</div>
-            <div style="display:flex;gap:6px;margin-top:12px">
-              <button class="btn-icon btn-edit" title="Editar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-              <button class="btn-icon btn-del" title="Eliminar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>
-            </div>
-          </div>
-          <div class="ann-admin-card">
-            <div class="ann-admin-top"><div><div class="ann-admin-title">Nuevo uniforme a partir del 15 de junio</div><div class="ann-admin-meta">📅 3 Jun 2025 · Recursos Humanos</div></div></div>
-            <div class="ann-admin-body">Comunicado sobre actualización de uniformes para personal de piso.</div>
-            <div style="display:flex;gap:6px;margin-top:12px">
-              <button class="btn-icon btn-edit" title="Editar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-              <button class="btn-icon btn-del" title="Eliminar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>
-            </div>
-          </div>
-          <div class="ann-admin-card">
-            <div class="ann-admin-top"><div><div class="ann-admin-title">Semana de Apreciación al Empleado</div><div class="ann-admin-meta">📅 28 May 2025 · Dirección General</div></div></div>
-            <div class="ann-admin-body">Aviso de celebración interna del 9 al 13 de junio en todas las sucursales.</div>
-            <div style="display:flex;gap:6px;margin-top:12px">
-              <button class="btn-icon btn-edit" title="Editar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-              <button class="btn-icon btn-del" title="Eliminar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>
-            </div>
-          </div>
-        </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card stat-accent">
+        <div class="stat-label">Avisos activos</div>
+        <div class="stat-value">3</div>
+        <div class="stat-sub">En todas las locaciones</div>
       </div>
-      <div>
-        <div class="ann-form-card">
-          <div class="ann-form-title">Nuevo Aviso</div>
-          <label class="form-label" style="margin-top:0">Tipo</label>
-          <select class="form-input"><option>Aviso general</option><option>Mensaje destacado</option><option>Urgente</option><option>Celebración</option><option>Recordatorio</option></select>
-          <label class="form-label">Título</label>
-          <input class="form-input" type="text" placeholder="Título del aviso…"/>
-          <label class="form-label">Contenido</label>
-          <textarea class="form-input form-textarea" placeholder="Escribe el mensaje…"></textarea>
-          <label class="form-label">Publicado por</label>
-          <input class="form-input" type="text" value="Dirección General"/>
-          <label class="form-label">Visible para</label>
-          <select class="form-input"><option>Todos los empleados</option><option>Solo gerentes</option><option>Locación específica</option></select>
-          <button class="form-submit" onclick="openAnnModal()">Configurar y Publicar →</button>
-        </div>
+      <div class="stat-card">
+        <div class="stat-label">Fijados</div>
+        <div class="stat-value">1</div>
+        <div class="stat-sub">Visible al top</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Por vencer</div>
+        <div class="stat-value">0</div>
+        <div class="stat-sub">Esta semana</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Última publicación</div>
+        <div class="stat-value" style="font-size:18px">3 Jun</div>
+        <div class="stat-sub">Recursos Humanos</div>
       </div>
     </div>
-  </div>
-</div>
+
+    <div class="section-label">Avisos publicados</div>
+    <div class="ann-list" style="display:flex;flex-direction:column;gap:12px">
+          <div class="ann-admin-card featured">
+            <div class="ann-admin-top">
+              <div><div class="ann-admin-title">¡Bienvenido al Portal Interno de Juan's Restaurants!</div><div class="ann-admin-meta"><span>📅 1 Jun 2025 · Dirección General</span></div></div>
+              <span class="ann-pin-tag"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V17z"/></svg> FIJADO</span>
+            </div>
+            <div class="ann-admin-body">Mensaje principal de bienvenida visible en la pantalla de inicio de todos los empleados.</div>
+        <div class="ann-audience">
+          <span class="aud-label">Para:</span>
+          <span class="aud-chip aud-all">Todos los empleados</span>
+        </div>
+            <div style="display:flex;gap:6px;margin-top:12px;align-items:center">
+              <button class="btn-pin pinned" title="Quitar fijado" onclick="togglePin(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V17z"/></svg></button>
+              <button class="btn-icon btn-edit" title="Editar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+              <button class="btn-icon btn-del" title="Eliminar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>
+            </div>
+          </div>
+          <div class="ann-admin-card">
+            <div class="ann-admin-top"><div><div class="ann-admin-title">Nuevo uniforme a partir del 15 de junio</div><div class="ann-admin-meta"><span>📅 3 Jun 2025 · Recursos Humanos</span><span class="ann-expiry exp-soon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Vence: 12 Jun 2025</span></div></div></div>
+            <div class="ann-admin-body">Comunicado sobre actualización de uniformes para personal de piso.</div>
+        <div class="ann-audience">
+          <span class="aud-label">Para:</span>
+          <span class="aud-chip aud-loc"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Long Beach</span>
+          <span class="aud-chip aud-loc"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Gulfport</span>
+          <span class="aud-chip aud-dept">RRHH</span>
+        </div>
+            <div style="display:flex;gap:6px;margin-top:12px;align-items:center">
+              <button class="btn-pin" title="Fijar aviso" onclick="togglePin(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V17z"/></svg></button>
+              <button class="btn-icon btn-edit" title="Editar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+              <button class="btn-icon btn-del" title="Eliminar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>
+            </div>
+          </div>
+          <div class="ann-admin-card">
+            <div class="ann-admin-top"><div><div class="ann-admin-title">Semana de Apreciación al Empleado</div><div class="ann-admin-meta"><span>📅 28 May 2025 · Dirección General</span><span class="ann-expiry exp-past"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Venció: 13 Jun 2025</span></div></div></div>
+            <div class="ann-admin-body">Aviso de celebración interna del 9 al 13 de junio en todas las sucursales.</div>
+        <div class="ann-audience">
+          <span class="aud-label">Para:</span>
+          <span class="aud-chip aud-all">Todas las locaciones</span>
+          <span class="aud-chip aud-user"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Laura Reyes</span>
+        </div>
+            <div style="display:flex;gap:6px;margin-top:12px;align-items:center">
+              <button class="btn-pin" title="Fijar aviso" onclick="togglePin(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V17z"/></svg></button>
+              <button class="btn-icon btn-edit" title="Editar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+              <button class="btn-icon btn-del" title="Eliminar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>
+            </div>
+          </div>
+        </div><!-- /ann-list -->
+  </div><!-- /page -->
+</div><!-- /section-announcements -->
 
 <!-- ═══ USUARIOS ═══ -->
 <div class="tab-panel" id="section-users">
   <div class="topbar">
     <div class="topbar-left"><div class="topbar-title">Usuarios</div></div>
     <div class="topbar-actions">
-      <button class="btn-secondary">Exportar lista</button>
-      <button class="btn-primary" onclick="openUserModal()">+ Nuevo Usuario</button>
+      <!-- Importar dropdown -->
+      <input type="file" id="csv-import-input" accept=".csv" style="display:none" onchange="showToast('CSV importado correctamente')"/>
+      <input type="file" id="xlsx-import-input" accept=".xlsx,.xls" style="display:none" onchange="showToast('Excel importado correctamente')"/>
+      <div class="export-dropdown">
+        <button class="btn-secondary export-trigger" style="display:inline-flex;align-items:center;gap:6px">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Importar
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="export-menu">
+          <div class="export-item" onclick="document.getElementById('csv-import-input').click()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            CSV
+          </div>
+          <div class="export-item" onclick="document.getElementById('xlsx-import-input').click()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>
+            Excel
+          </div>
+        </div>
+      </div>
+      <!-- Exportar dropdown -->
+      <div class="export-dropdown">
+        <button class="btn-secondary export-trigger" style="display:inline-flex;align-items:center;gap:6px">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Exportar
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="export-menu">
+          <div class="export-item" onclick="showToast('Exportando CSV…')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            CSV
+          </div>
+          <div class="export-item" onclick="showToast('Exportando Excel…')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>
+            Excel
+          </div>
+          <div class="export-item" onclick="showToast('Exportando PDF…')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            PDF
+          </div>
+        </div>
+      </div>
+      <!-- Nuevo Usuario -->
+      <button class="btn-primary" onclick="openUserModal()" style="display:inline-flex;align-items:center;gap:6px">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+        Nuevo Usuario
+      </button>
     </div>
   </div>
   <div class="page">
     <div class="filters-bar" style="margin-bottom:18px">
-      <input class="search-input" placeholder="Buscar usuario…"/>
-      <select class="filter-select"><option>Todos los departamentos</option><option>Cocina</option><option>RRHH</option><option>Marketing</option><option>Operaciones</option><option>Finanzas</option></select>
-      <select class="filter-select"><option>Todos los estados</option><option>Activo</option><option>Inactivo</option></select>
+      <div class="search-wrap">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input class="search-input" placeholder="Buscar usuario…"/>
+      </div>
+      <select class="filter-select"><option value="">Todas las locaciones</option><option>Long Beach</option><option>Gulfport</option><option>Biloxi</option></select>
+      <select class="filter-select"><option value="">Todos los departamentos</option><option>Cocina</option><option>RRHH</option><option>Marketing</option><option>Operaciones</option><option>Finanzas</option></select>
+      <select class="filter-select"><option value="">Todos los estados</option><option>Activo</option><option>Inactivo</option></select>
     </div>
     <div class="users-table">
-      <div class="users-head"><div class="th">Nombre</div><div class="th">Correo corporativo</div><div class="th">Departamento</div><div class="th">Estado</div><div class="th">Acciones</div></div>
+      <div class="users-head">
+        <div class="th">Nombre</div>
+        <div class="th">Locación</div>
+        <div class="th">Departamento</div>
+        <div class="th">Fecha de Ingreso</div>
+        <div class="th">Salario Actual</div>
+        <div class="th">Estado</div>
+        <div class="th">Acciones</div>
+      </div>
       <div class="users-row">
-        <div class="user-name-cell"><div class="user-av" style="background:#c0392b">CM</div><div><div style="font-size:13px;font-weight:600;color:#111">Carlos Martínez</div><div style="font-size:11px;color:#bbb">Mesero · Long Beach</div></div></div>
-        <div class="td">c.martinez@juansrestaurants.com</div>
+        <div class="user-name-cell"><div class="user-av" style="background:#c0392b">CM</div><div><div style="font-size:13px;font-weight:600;color:#111">Carlos Martínez</div><div style="font-size:11px;color:#bbb">Mesero</div></div></div>
+        <div class="td">Long Beach</div>
         <div class="td"><span class="dept-tag dept-ops">Operaciones</span></div>
+        <div class="td" style="color:#888">12 Mar 2022</div>
+        <div class="td" style="font-weight:600;color:#111">$14.50/hr</div>
         <div class="td"><span class="status-active">Activo</span></div>
-        <div style="display:flex;gap:2px;padding:0 4px">
+        <div style="display:flex;gap:1px;align-items:center">
+          <button class="btn-icon btn-preview" title="Vista previa"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+          <button class="btn-icon btn-download" title="Descargar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button>
           <button class="btn-icon btn-edit" title="Editar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-          <button class="btn-icon btn-del" title="Eliminar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg></button>
+          <button class="btn-icon btn-share" title="Compartir"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>
+          <button class="btn-icon btn-del" title="Eliminar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>
         </div>
       </div>
       <div class="users-row">
-        <div class="user-name-cell"><div class="user-av" style="background:#8e44ad">LR</div><div><div style="font-size:13px;font-weight:600;color:#111">Laura Reyes</div><div style="font-size:11px;color:#bbb">Coordinadora · RRHH</div></div></div>
-        <div class="td">l.reyes@juansrestaurants.com</div>
+        <div class="user-name-cell"><div class="user-av" style="background:#8e44ad">LR</div><div><div style="font-size:13px;font-weight:600;color:#111">Laura Reyes</div><div style="font-size:11px;color:#bbb">Coordinadora</div></div></div>
+        <div class="td">Gulfport</div>
         <div class="td"><span class="dept-tag dept-rrhh">RRHH</span></div>
+        <div class="td" style="color:#888">05 Jun 2020</div>
+        <div class="td" style="font-weight:600;color:#111">$52,000/yr</div>
         <div class="td"><span class="status-active">Activo</span></div>
-        <div style="display:flex;gap:2px;padding:0 4px">
+        <div style="display:flex;gap:1px;align-items:center">
+          <button class="btn-icon btn-preview" title="Vista previa"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+          <button class="btn-icon btn-download" title="Descargar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button>
           <button class="btn-icon btn-edit" title="Editar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-          <button class="btn-icon btn-del" title="Eliminar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg></button>
+          <button class="btn-icon btn-share" title="Compartir"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>
+          <button class="btn-icon btn-del" title="Eliminar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>
         </div>
       </div>
       <div class="users-row">
-        <div class="user-name-cell"><div class="user-av" style="background:#e67e22">JP</div><div><div style="font-size:13px;font-weight:600;color:#111">Jorge Pérez</div><div style="font-size:11px;color:#bbb">Chef · Cocina</div></div></div>
-        <div class="td">j.perez@juansrestaurants.com</div>
+        <div class="user-name-cell"><div class="user-av" style="background:#e67e22">JP</div><div><div style="font-size:13px;font-weight:600;color:#111">Jorge Pérez</div><div style="font-size:11px;color:#bbb">Chef</div></div></div>
+        <div class="td">Biloxi</div>
         <div class="td"><span class="dept-tag dept-kitchen">Cocina</span></div>
+        <div class="td" style="color:#888">18 Ene 2019</div>
+        <div class="td" style="font-weight:600;color:#111">$48,000/yr</div>
         <div class="td"><span class="status-active">Activo</span></div>
-        <div style="display:flex;gap:2px;padding:0 4px">
+        <div style="display:flex;gap:1px;align-items:center">
+          <button class="btn-icon btn-preview" title="Vista previa"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+          <button class="btn-icon btn-download" title="Descargar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button>
           <button class="btn-icon btn-edit" title="Editar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-          <button class="btn-icon btn-del" title="Eliminar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg></button>
+          <button class="btn-icon btn-share" title="Compartir"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>
+          <button class="btn-icon btn-del" title="Eliminar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>
         </div>
       </div>
       <div class="users-row">
-        <div class="user-name-cell"><div class="user-av" style="background:#27ae60">AG</div><div><div style="font-size:13px;font-weight:600;color:#111">Ana García</div><div style="font-size:11px;color:#bbb">Gerente · Biloxi</div></div></div>
-        <div class="td">a.garcia@juansrestaurants.com</div>
+        <div class="user-name-cell"><div class="user-av" style="background:#27ae60">AG</div><div><div style="font-size:13px;font-weight:600;color:#111">Ana García</div><div style="font-size:11px;color:#bbb">Gerente</div></div></div>
+        <div class="td">Long Beach</div>
         <div class="td"><span class="dept-tag dept-ops">Operaciones</span></div>
+        <div class="td" style="color:#888">02 Sep 2017</div>
+        <div class="td" style="font-weight:600;color:#111">$68,000/yr</div>
         <div class="td"><span class="status-inactive">Inactivo</span></div>
-        <div style="display:flex;gap:2px;padding:0 4px">
+        <div style="display:flex;gap:1px;align-items:center">
+          <button class="btn-icon btn-preview" title="Vista previa"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+          <button class="btn-icon btn-download" title="Descargar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button>
           <button class="btn-icon btn-edit" title="Editar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-          <button class="btn-icon btn-del" title="Eliminar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg></button>
+          <button class="btn-icon btn-share" title="Compartir"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>
+          <button class="btn-icon btn-del" title="Eliminar"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>
         </div>
       </div>
     </div>
@@ -654,24 +844,35 @@ input,select,textarea{outline:none;font-family:inherit}
 <div class="modal-overlay" id="folder-modal-overlay" onclick="closeOnOverlay(event,'folder-modal-overlay')">
   <div class="modal-box">
     <div class="modal-header">
-      <div class="modal-title">Nueva Carpeta</div>
+      <div class="modal-title" style="display:flex;align-items:center;gap:8px">
+        <span style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;background:#fdf0ee;border-radius:7px;flex-shrink:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c0392b" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></span>
+        Nueva Carpeta
+      </div>
       <button class="modal-close" onclick="closeModal('folder-modal-overlay')">✕</button>
     </div>
     <div class="modal-body">
       <label class="form-label" style="margin-top:0">Nombre de la carpeta</label>
       <input class="form-input" id="folder-name-input" type="text" placeholder="ej. Q1 2026, Manuales, Operaciones…"/>
 
-      <label class="form-label">Ubicación (carpeta padre)</label>
-      <div class="location-picker">
-        <div class="loc-breadcrumb" id="folder-bc"><span class="bc-item current">Raíz</span></div>
-        <div class="loc-folders" id="folder-loc-list"></div>
+      <!-- Change 1 & 2: simple dropdown, "Juan's" as root -->
+      <label class="form-label">Ubicación</label>
+      <select class="form-input" id="folder-location-select">
+        <option value="">Juan's (raíz)</option>
+        <!-- populated by JS via buildFolderLocationDropdown() -->
+      </select>
+
+      <!-- Change 3: "Acceso por …" labels -->
+      <label class="form-label">Acceso por locación</label>
+      <select class="form-input"><option value="">Todas las locaciones</option><option>Long Beach</option><option>Gulfport</option><option>Biloxi</option></select>
+      <label class="form-label">Acceso por departamento</label>
+      <div style="background:#f8f8f8;border:1.5px solid #e8e8e8;border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:7px">
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#333;cursor:pointer;user-select:none"><input type="checkbox" value="Cocina" style="accent-color:#c0392b;width:14px;height:14px"> Cocina</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#333;cursor:pointer;user-select:none"><input type="checkbox" value="RRHH" style="accent-color:#c0392b;width:14px;height:14px"> RRHH</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#333;cursor:pointer;user-select:none"><input type="checkbox" value="Marketing" style="accent-color:#c0392b;width:14px;height:14px"> Marketing</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#333;cursor:pointer;user-select:none"><input type="checkbox" value="Operaciones" style="accent-color:#c0392b;width:14px;height:14px"> Operaciones</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#333;cursor:pointer;user-select:none"><input type="checkbox" value="Finanzas" style="accent-color:#c0392b;width:14px;height:14px"> Finanzas</label>
       </div>
 
-      <!-- ORDER: Locación, Departamento, Acceso por puesto, Acceso por usuario -->
-      <label class="form-label">Locación</label>
-      <select class="form-input"><option value="">Todas las locaciones</option><option>Long Beach</option><option>Gulfport</option><option>Biloxi</option></select>
-      <label class="form-label">Departamento</label>
-      <select class="form-input"><option value="">Todos los departamentos</option><option>Cocina</option><option>RRHH</option><option>Marketing</option><option>Operaciones</option><option>Finanzas</option></select>
       <label class="form-label">Acceso por puesto</label>
       <select class="form-input" id="folder-perm">
         <option value="all">Todo el personal</option>
@@ -679,8 +880,11 @@ input,select,textarea{outline:none;font-family:inherit}
         <option value="dept">Por departamento</option>
         <option value="restricted">Restringido</option>
       </select>
+
       <label class="form-label">Acceso por usuario</label>
-      <select class="form-input"><option value="">Todos los usuarios</option><option>Carlos Martínez</option><option>Laura Reyes</option><option>Jorge Pérez</option><option>Sofía Morales</option><option>Ana García</option></select>
+      <input type="text" class="form-input" id="folder-user-search" placeholder="Buscar usuario…" oninput="renderFolderUserList()" style="margin-bottom:6px"/>
+      <div id="folder-user-list" style="max-height:180px;overflow-y:auto;display:flex;flex-direction:column;gap:4px"></div>
+      <div id="folder-user-pills" style="display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;min-height:0"></div>
     </div>
     <div class="modal-footer">
       <button class="modal-cancel" onclick="closeModal('folder-modal-overlay')">Cancelar</button>
@@ -693,37 +897,123 @@ input,select,textarea{outline:none;font-family:inherit}
 <div class="modal-overlay" id="ann-modal-overlay" onclick="closeOnOverlay(event,'ann-modal-overlay')">
   <div class="modal-box modal-lg">
     <div class="modal-header">
-      <div class="modal-title">Nuevo Aviso</div>
+      <div class="modal-title" style="display:flex;align-items:center;gap:8px">
+        <span style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;background:#fdf0ee;border-radius:7px;flex-shrink:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c0392b" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>
+        Nuevo Aviso
+      </div>
       <button class="modal-close" onclick="closeModal('ann-modal-overlay')">✕</button>
     </div>
     <div class="modal-body">
+
+      <!-- Tipo -->
       <label class="form-label" style="margin-top:0">Tipo</label>
-      <select class="form-input"><option>Aviso general</option><option>Mensaje destacado</option><option>Urgente</option><option>Celebración</option><option>Recordatorio</option></select>
-      <label class="form-label">Título</label>
-      <input class="form-input" type="text" placeholder="Título del aviso…"/>
+      <select class="form-input">
+        <option>Aviso general</option>
+        <option>Urgente</option>
+        <option>Recordatorio</option>
+        <option>Celebración</option>
+      </select>
+
+      <!-- Título -->
+      <label class="form-label">Título del aviso</label>
+      <input class="form-input" type="text" placeholder="ej. Reunión obligatoria el viernes…"/>
+
+      <!-- Contenido -->
       <label class="form-label">Contenido</label>
-      <textarea class="form-input form-textarea" placeholder="Escribe el mensaje…"></textarea>
+      <textarea class="form-input form-textarea" style="min-height:90px" placeholder="Escribe el mensaje completo…"></textarea>
+
+      <!-- Publicado por -->
       <label class="form-label">Publicado por</label>
-      <input class="form-input" type="text" value="Dirección General"/>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+        <select class="form-input" style="margin-bottom:0">
+          <option value="">Departamento…</option>
+          <option>Dirección General</option>
+          <option>Cocina</option>
+          <option>RRHH</option>
+          <option>Marketing</option>
+          <option>Operaciones</option>
+          <option>Finanzas</option>
+        </select>
+        <select class="form-input" style="margin-bottom:0">
+          <option value="">Usuario…</option>
+          <option>Carlos Martínez</option>
+          <option>Laura Reyes</option>
+          <option>Jorge Pérez</option>
+          <option>Ana García</option>
+        </select>
+      </div>
+
+      <!-- Visible para -->
       <label class="form-label">Visible para</label>
-      <select class="form-input"><option>Todos los empleados</option><option>Solo gerentes</option><option>Locación específica</option></select>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px">
+        <select class="form-input" style="margin-bottom:0">
+          <option value="">Locación…</option>
+          <option>Todas</option>
+          <option>Long Beach</option>
+          <option>Gulfport</option>
+          <option>Biloxi</option>
+        </select>
+        <select class="form-input" style="margin-bottom:0">
+          <option value="">Departamento…</option>
+          <option>Todos</option>
+          <option>Cocina</option>
+          <option>RRHH</option>
+          <option>Marketing</option>
+          <option>Operaciones</option>
+          <option>Finanzas</option>
+        </select>
+        <select class="form-input" style="margin-bottom:0">
+          <option value="">Usuario…</option>
+          <option>Carlos Martínez</option>
+          <option>Laura Reyes</option>
+          <option>Jorge Pérez</option>
+          <option>Ana García</option>
+        </select>
+      </div>
+
       <div class="form-divider"></div>
+
+      <!-- Notificar vía -->
       <label class="form-label">Notificar también vía</label>
-      <div class="channels-row">
-        <div class="channel-btn active" onclick="toggleCh(this)"><span class="ch-icon">✉️</span><span class="ch-label">Email</span></div>
-        <div class="channel-btn" onclick="toggleCh(this)"><span class="ch-icon">💬</span><span class="ch-label">WhatsApp</span></div>
-        <div class="channel-btn" onclick="toggleCh(this)"><span class="ch-icon">📱</span><span class="ch-label">SMS</span></div>
-        <div class="channel-btn" onclick="toggleCh(this)"><span class="ch-icon">🔕</span><span class="ch-label">Sin notif.</span></div>
+      <div class="notif-chips">
+        <div class="notif-chip" onclick="this.classList.toggle('active')">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          WhatsApp
+        </div>
+        <div class="notif-chip" onclick="this.classList.toggle('active')">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          SMS
+        </div>
       </div>
+
       <div class="form-divider"></div>
-      <label class="form-label">Destinatarios específicos (opcional)</label>
-      <div class="share-tabs">
-        <button class="share-tab active" onclick="setAnnTab(this,'usuarios')">Usuarios</button>
-        <button class="share-tab" onclick="setAnnTab(this,'grupos')">Grupos</button>
-        <button class="share-tab" onclick="setAnnTab(this,'locaciones')">Locaciones</button>
+
+      <!-- Pin + Caducidad toggles -->
+      <div class="toggle-row">
+        <div class="toggle-row-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><path d="M12 2L8 8H2l5 4-2 7 7-4 7 4-2-7 5-4h-6L12 2z"/><line x1="12" y1="17" x2="12" y2="22"/></svg>
+          Fijar aviso arriba de la lista
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="ann-pin-toggle"/>
+          <div class="toggle-track"></div>
+        </label>
       </div>
-      <div class="pills-wrap" id="ann-pills"><span style="font-size:11px;color:#ccc;align-self:center">Opcional…</span></div>
-      <div class="share-list" id="ann-list"></div>
+
+      <div class="toggle-row" style="margin-bottom:0">
+        <div class="toggle-row-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Este aviso tiene caducidad
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="ann-exp-toggle" onchange="document.getElementById('ann-exp-date').style.display=this.checked?'block':'none'"/>
+          <div class="toggle-track"></div>
+        </label>
+      </div>
+      <div id="ann-exp-date" style="display:none;margin-top:8px">
+        <input class="form-input" type="date" style="margin-bottom:0"/>
+      </div>
+
     </div>
     <div class="modal-footer">
       <button class="modal-cancel" onclick="closeModal('ann-modal-overlay')">Cancelar</button>
@@ -736,7 +1026,12 @@ input,select,textarea{outline:none;font-family:inherit}
 <div class="modal-overlay" id="user-modal-overlay" onclick="closeOnOverlay(event,'user-modal-overlay')">
   <div class="modal-box">
     <div class="modal-header">
-      <div class="modal-title">Nuevo Usuario</div>
+      <div class="modal-title" style="display:flex;align-items:center;gap:8px">
+        <span style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;background:#fdf0ee;border-radius:7px;flex-shrink:0">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c0392b" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+        </span>
+        Nuevo Usuario
+      </div>
       <button class="modal-close" onclick="closeModal('user-modal-overlay')">✕</button>
     </div>
     <div class="modal-body">
@@ -761,7 +1056,7 @@ input,select,textarea{outline:none;font-family:inherit}
 </div>
 
 <!-- ══════════════ JS ══════════════ -->
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ── SVG icons (inline, no emoji on files/folders) ── */
 const IC = {
   chevron: `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>`,
@@ -845,72 +1140,85 @@ function sharedCell(ids){
 }
 
 /* ── TREE RENDER ────────────────────────────────────── */
-function renderTree(){
-  const q    = (document.getElementById('filter-search')?.value||'').toLowerCase();
-  const dept = document.getElementById('filter-dept')?.value||'';
-  const loc  = document.getElementById('filter-loc')?.value||'';
-  const srt  = document.getElementById('sort-select')?.value||'date-desc';
-  const SF   = { 'date-desc':(a,b)=>b.id-a.id, 'date-asc':(a,b)=>a.id-b.id,
-                 'name-asc':(a,b)=>a.name.localeCompare(b.name), 'name-desc':(a,b)=>b.name.localeCompare(a.name),
-                 'size-desc':(a,b)=>b.size-a.size, 'size-asc':(a,b)=>a.size-b.size };
+function populateFolderFilter(){
+  const sel = document.getElementById('filter-folder'); if(!sel) return;
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">Todas las carpetas</option>'
+    + folders.filter(f=>f.parentId===null).map(f=>`<option value="${f.id}">${f.name}</option>`).join('');
+  sel.value = cur;
+}
 
-  const root = folders.filter(f=>f.parentId===null);
+function renderTree(){
+  populateFolderFilter();
+  const q      = (document.getElementById('filter-search')?.value||'').toLowerCase();
+  const dept   = document.getElementById('filter-dept')?.value||'';
+  const loc    = document.getElementById('filter-loc')?.value||'';
+  const folder = document.getElementById('filter-folder')?.value||'';
+  const srt    = document.getElementById('sort-select')?.value||'date-desc';
+  const SF     = { 'date-desc':(a,b)=>b.id-a.id, 'date-asc':(a,b)=>a.id-b.id,
+                   'name-asc':(a,b)=>a.name.localeCompare(b.name), 'name-desc':(a,b)=>b.name.localeCompare(a.name),
+                   'size-desc':(a,b)=>b.size-a.size, 'size-asc':(a,b)=>a.size-b.size };
+
+  // If folder filter active, only show that folder
+  const root = folder
+    ? folders.filter(f=>f.id===parseInt(folder))
+    : folders.filter(f=>f.parentId===null);
   let html='';
 
-  root.forEach(folder=>{
+  root.forEach(f=>{
     const fdocs = docs.filter(d=>{
-      if(d.folder!==folder.id) return false;
+      if(d.folder!==f.id) return false;
       if(q && !d.name.toLowerCase().includes(q) && !d.dept.toLowerCase().includes(q)) return false;
       if(dept && d.dept!==dept) return false;
       if(loc && d.loc!==loc && d.loc!=='Todas') return false;
       return true;
     }).sort(SF[srt]||SF['date-desc']);
 
-    const isOpen = folder.open || (q||dept||loc ? fdocs.length>0 : false);
+    const isOpen = f.open || !!(q||dept||loc||folder ? fdocs.length>0 : false);
 
     html += `
-<div class="folder-row ${isOpen?'is-open':''}" id="fr-${folder.id}"
-  ondragover="folderDragOver(event,${folder.id})"
-  ondragleave="folderDragLeave(${folder.id})"
-  ondrop="folderDrop(event,${folder.id})">
-  <div class="folder-row-inner" onclick="toggleFolder(${folder.id})">
-    <div class="folder-toggle-col">
+<div class="folder-row ${isOpen?'is-open':''}" id="fr-${f.id}"
+  ondragover="folderDragOver(event,${f.id})"
+  ondragleave="folderDragLeave(${f.id})"
+  ondrop="folderDrop(event,${f.id})">
+  <div class="folder-row-inner tree-cols" onclick="toggleFolder(${f.id})">
+    <div class="folder-name-cell">
       <span class="chevron">${IC.chevron}</span>
-      <span class="folder-icon-col">${IC.folder}</span>
-      <span class="folder-label">${folder.name}</span>
+      <span class="folder-icon">${IC.folder}</span>
+      <span class="folder-label">${f.name}</span>
       <span class="folder-count">${fdocs.length} archivo${fdocs.length!==1?'s':''}</span>
     </div>
-    <div class="folder-meta-col"></div>
-    <div class="folder-dept-col"></div>
-    <div class="folder-shared-col"></div>
-    <div class="folder-date-col"><span class="perm-pill ${PERM_CLS[folder.perm]}">${PERM_LBL[folder.perm]}</span></div>
-    <div class="folder-actions-col">
-      <button class="btn-icon btn-share" title="Compartir" onclick="event.stopPropagation();openShareModal('folder',${folder.id})">${IC.share}</button>
-      <button class="btn-icon btn-del"   title="Eliminar"   onclick="event.stopPropagation();delFolder(${folder.id})">${IC.del}</button>
+    <div class="folder-cell"></div>
+    <div class="folder-cell"></div>
+    <div class="folder-cell"></div>
+    <div class="folder-cell"><span class="perm-pill ${PERM_CLS[f.perm]}">${PERM_LBL[f.perm]}</span></div>
+    <div class="folder-actions-cell">
+      <button class="btn-icon btn-share" title="Compartir" onclick="event.stopPropagation();openShareModal('folder',${f.id})">${IC.share}</button>
+      <button class="btn-icon btn-del" title="Eliminar" onclick="event.stopPropagation();delFolder(${f.id})">${IC.del}</button>
     </div>
   </div>
-  <div class="folder-children ${isOpen?'open':''}" id="fc-${folder.id}">
+  <div class="folder-children ${isOpen?'open':''}" id="fc-${f.id}">
     <div class="folder-children-inner">
       ${fdocs.length===0
-        ? `<div class="folder-empty">Sin documentos</div>`
+        ? '<div class="folder-empty">Sin documentos</div>'
         : fdocs.map(doc=>`
 <div class="doc-row" draggable="true" data-doc-id="${doc.id}"
   ondragstart="docDragStart(event,${doc.id})" ondragend="docDragEnd(event)">
-  <div class="doc-row-inner">
-    <div class="doc-name-col">
+  <div class="doc-row-inner tree-cols">
+    <div class="doc-name-cell">
       <div class="doc-name">${doc.name}${doc.isNew?'<span class="new-tag">NUEVO</span>':''}</div>
       <div class="doc-meta">${doc.type} &middot; ${doc.size} MB</div>
     </div>
-    <div class="doc-loc-col">${doc.loc}</div>
-    <div class="doc-dept-col"><span class="dept-tag ${DEPT_CLS[doc.dept]||''}">${doc.dept}</span></div>
-    <div class="doc-shared-col">${sharedCell(doc.sharedWith)}</div>
-    <div class="doc-date-col">${doc.date}</div>
-    <div class="doc-actions-col">
-      <button class="btn-icon btn-preview"  title="Vista previa">${IC.preview}</button>
+    <div class="doc-cell">${doc.loc}</div>
+    <div class="doc-cell"><span class="dept-tag ${DEPT_CLS[doc.dept]||''}">${doc.dept}</span></div>
+    <div class="doc-shared-cell">${sharedCell(doc.sharedWith)}</div>
+    <div class="doc-cell">${doc.date}</div>
+    <div class="doc-actions-cell">
+      <button class="btn-icon btn-preview" title="Vista previa">${IC.preview}</button>
       <button class="btn-icon btn-download" title="Descargar">${IC.download}</button>
-      <button class="btn-icon btn-edit"     title="Editar">${IC.edit}</button>
-      <button class="btn-icon btn-share"    title="Compartir" onclick="openShareModal('doc',${doc.id})">${IC.share}</button>
-      <button class="btn-icon btn-del"      title="Eliminar"  onclick="delDoc(${doc.id})">${IC.del}</button>
+      <button class="btn-icon btn-edit" title="Editar">${IC.edit}</button>
+      <button class="btn-icon btn-share" title="Compartir" onclick="openShareModal('doc',${doc.id})">${IC.share}</button>
+      <button class="btn-icon btn-del" title="Eliminar" onclick="delDoc(${doc.id})">${IC.del}</button>
     </div>
   </div>
 </div>`).join('')
@@ -920,8 +1228,8 @@ function renderTree(){
 </div>`;
   });
 
-  document.getElementById('tree-body').innerHTML = html || `<div style="padding:28px;text-align:center;color:#bbb;font-size:13px">Sin resultados</div>`;
-  document.getElementById('stat-folders').textContent = root.length;
+  document.getElementById('tree-body').innerHTML = html || '<div style="padding:28px;text-align:center;color:#bbb;font-size:13px">Sin resultados</div>';
+  document.getElementById('stat-folders').textContent = folders.filter(f=>f.parentId===null).length;
 }
 
 function toggleFolder(id){
@@ -956,8 +1264,8 @@ function buildLocPicker(listId,bcId,ns){
   const lEl=document.getElementById(listId); const bEl=document.getElementById(bcId);
   if(!lEl||!bEl) return;
   const sel=ns==='folder'?folderLocSel:uploadLocSel;
-  bEl.innerHTML=`<span class="bc-item current">Raíz</span>`;
-  lEl.innerHTML=`<div class="loc-item ${sel===null?'selected':''}" onclick="selLoc(null,'${ns}','${listId}')"><span class="loc-item-name">Guardar en la raíz</span></div>`
+  bEl.innerHTML=`<span class="bc-item current">Juan's</span>`;
+  lEl.innerHTML=`<div class="loc-item ${sel===null?'selected':''}" onclick="selLoc(null,'${ns}','${listId}')"><span class="loc-item-name">Juan's (raíz)</span></div>`
     +folders.filter(f=>f.parentId===null).map(f=>`
 <div class="loc-item ${sel===f.id?'selected':''}" onclick="selLoc(${f.id},'${ns}','${listId}')">
   <span class="loc-item-name">${IC.folder} &nbsp;${f.name}</span>
@@ -967,13 +1275,81 @@ function buildLocPicker(listId,bcId,ns){
 function selLoc(id,ns,listId){ if(ns==='folder') folderLocSel=id; else uploadLocSel=id; buildLocPicker(listId,ns==='folder'?'folder-bc':'upload-bc',ns); }
 
 /* ── FOLDER MODAL ────────────────────────────────────── */
-function openFolderModal(){ folderLocSel=null; document.getElementById('folder-name-input').value=''; buildLocPicker('folder-loc-list','folder-bc','folder'); openModal('folder-modal-overlay'); }
+/* folder modal user multi-select */
+let folderSelectedUsers = [];
+
+function buildFolderLocationDropdown(){
+  const sel = document.getElementById('folder-location-select');
+  if(!sel) return;
+  // keep first "Juan's" option, rebuild the rest
+  sel.innerHTML = `<option value="">Juan's (raíz)</option>`
+    + folders.filter(f=>f.parentId===null).map(f=>`<option value="${f.id}">${f.name}</option>`).join('');
+}
+
+function renderFolderUserList(){
+  const q = (document.getElementById('folder-user-search')?.value||'').toLowerCase();
+  const wrap = document.getElementById('folder-user-list');
+  if(!wrap) return;
+  const filtered = USERS.filter(u => u.name.toLowerCase().includes(q) || u.role.toLowerCase().includes(q));
+  wrap.innerHTML = filtered.map(u => `
+    <div class="share-user-row ${folderSelectedUsers.includes(u.id)?'selected':''}"
+      onclick="toggleFolderUser(${u.id})" style="cursor:pointer">
+      <div class="share-uav" style="background:${u.color}">${u.initials}</div>
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:600;color:#111">${u.name}</div>
+        <div style="font-size:11px;color:#bbb">${u.role}</div>
+      </div>
+      ${folderSelectedUsers.includes(u.id)
+        ? `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#c0392b" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>`
+        : ''}
+    </div>`).join('');
+}
+
+function toggleFolderUser(id){
+  const idx = folderSelectedUsers.indexOf(id);
+  if(idx>-1) folderSelectedUsers.splice(idx,1); else folderSelectedUsers.push(id);
+  renderFolderUserPills();
+  renderFolderUserList();
+}
+
+function removeFolderUser(id){
+  folderSelectedUsers = folderSelectedUsers.filter(u=>u!==id);
+  renderFolderUserPills();
+  renderFolderUserList();
+}
+
+function renderFolderUserPills(){
+  const wrap = document.getElementById('folder-user-pills');
+  if(!wrap) return;
+  if(!folderSelectedUsers.length){ wrap.innerHTML=''; return; }
+  wrap.innerHTML = folderSelectedUsers.map(id=>{
+    const u = USERS.find(u=>u.id===id); if(!u) return '';
+    return `<span class="share-pill">
+      <span class="pill-av" style="background:${u.color}">${u.initials}</span>
+      ${u.name}
+      <button onclick="removeFolderUser(${u.id})">×</button>
+    </span>`;
+  }).join('');
+}
+
+function openFolderModal(){
+  folderSelectedUsers=[];
+  document.getElementById('folder-name-input').value='';
+  document.getElementById('folder-user-pills').innerHTML='';
+  const search = document.getElementById('folder-user-search');
+  if(search) search.value='';
+  buildFolderLocationDropdown();
+  renderFolderUserList();
+  openModal('folder-modal-overlay');
+}
 function saveFolder(){
   const name=document.getElementById('folder-name-input').value.trim(); if(!name){showToast('Escribe un nombre');return;}
   const perm=document.getElementById('folder-perm').value;
+  const locVal=document.getElementById('folder-location-select').value;
+  const parentId=locVal?parseInt(locVal):null;
   const newId=Math.max(0,...folders.map(f=>f.id))+1;
-  folders.push({id:newId,name,perm,parentId:folderLocSel,open:false});
-  renderTree(); buildLocPickers(); closeModal('folder-modal-overlay'); showToast(`Carpeta "${name}" creada`);
+  folders.push({id:newId,name,perm,parentId,open:false});
+  renderTree(); buildLocPickers(); buildFolderLocationDropdown(); closeModal('folder-modal-overlay'); showToast(`Carpeta "${name}" creada`);
 }
 
 /* ── SHARE MODAL ─────────────────────────────────────── */
@@ -1023,8 +1399,41 @@ function saveShare(){
 }
 
 /* ── ANN MODAL ───────────────────────────────────────── */
-function openAnnModal(){ annIds=[]; annTab='usuarios'; renderPills('ann-pills',annIds,'ann'); renderShareList('ann-list','usuarios',annIds,'ann'); document.querySelectorAll('#ann-modal-overlay .share-tab').forEach((b,i)=>b.classList.toggle('active',i===0)); openModal('ann-modal-overlay'); }
+function openAnnModal(){
+  annIds=[]; annTab='usuarios';
+  // Reset toggles and date picker if present
+  const pinT=document.getElementById('ann-pin-toggle'); if(pinT) pinT.checked=false;
+  const expT=document.getElementById('ann-exp-toggle'); if(expT){ expT.checked=false; }
+  const expD=document.getElementById('ann-exp-date'); if(expD) expD.style.display='none';
+  openModal('ann-modal-overlay');
+}
 function publishAnn(){ closeModal('ann-modal-overlay'); showToast('Aviso publicado y notificaciones enviadas'); }
+function togglePin(btn){
+  const card = btn.closest('.ann-admin-card');
+  const isPinned = btn.classList.contains('pinned');
+  if(isPinned){
+    btn.classList.remove('pinned');
+    btn.title = 'Fijar aviso';
+    card.classList.remove('featured');
+    // remove FIJADO tag if present
+    const tag = card.querySelector('.ann-pin-tag');
+    if(tag) tag.remove();
+    showToast('Aviso desfijado');
+  } else {
+    btn.classList.add('pinned');
+    btn.title = 'Quitar fijado';
+    card.classList.add('featured');
+    // add FIJADO tag in top-right
+    const top = card.querySelector('.ann-admin-top');
+    if(top && !top.querySelector('.ann-pin-tag')){
+      const tag = document.createElement('span');
+      tag.className = 'ann-pin-tag';
+      tag.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V17z"/></svg> FIJADO';
+      top.appendChild(tag);
+    }
+    showToast('Aviso fijado arriba de la lista');
+  }
+}
 
 /* ── USER MODAL ──────────────────────────────────────── */
 function openUserModal(){ openModal('user-modal-overlay'); }
@@ -1038,14 +1447,188 @@ function closeOnOverlay(e,id){ if(e.target.id===id) closeModal(id); }
 function simulateUpload(){ showToast('Documento subido correctamente'); }
 function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000); }
 
-/* ── DROPZONE ────────────────────────────────────────── */
+/* ── UPLOAD MODAL ───────────────────────────────────── */
+let uploadSelectedUsers = [];
+
+function openUploadModal(){
+  uploadSelectedUsers = [];
+  document.getElementById('upload-user-pills').innerHTML = '';
+  const search = document.getElementById('upload-user-search');
+  if(search) search.value = '';
+  document.getElementById('upload-file-name').value = '';
+  document.getElementById('upload-modal-filename').style.display = 'none';
+  // uncheck all dept checkboxes
+  document.querySelectorAll('#upload-modal-overlay input[type=checkbox]').forEach(c=>c.checked=false);
+  // populate folder dropdown
+  const sel = document.getElementById('upload-modal-folder');
+  if(sel){
+    sel.innerHTML = `<option value="">Juan's (raíz)</option>`
+      + folders.filter(f=>f.parentId===null).map(f=>`<option value="${f.id}">${f.name}</option>`).join('');
+  }
+  renderUploadUserList();
+  openModal('upload-modal-overlay');
+}
+
+function renderUploadUserList(){
+  const q = (document.getElementById('upload-user-search')?.value||'').toLowerCase();
+  const wrap = document.getElementById('upload-user-list');
+  if(!wrap) return;
+  const filtered = USERS.filter(u => u.name.toLowerCase().includes(q) || u.role.toLowerCase().includes(q));
+  wrap.innerHTML = filtered.map(u=>`
+    <div class="share-user-row ${uploadSelectedUsers.includes(u.id)?'selected':''}"
+      onclick="toggleUploadUser(${u.id})">
+      <div class="share-uav" style="background:${u.color}">${u.initials}</div>
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:600;color:#111">${u.name}</div>
+        <div style="font-size:11px;color:#bbb">${u.role}</div>
+      </div>
+      ${uploadSelectedUsers.includes(u.id)
+        ? '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#c0392b" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>'
+        : ''}
+    </div>`).join('');
+}
+
+function toggleUploadUser(id){
+  const idx = uploadSelectedUsers.indexOf(id);
+  if(idx>-1) uploadSelectedUsers.splice(idx,1); else uploadSelectedUsers.push(id);
+  renderUploadUserPills();
+  renderUploadUserList();
+}
+
+function removeUploadUser(id){
+  uploadSelectedUsers = uploadSelectedUsers.filter(u=>u!==id);
+  renderUploadUserPills();
+  renderUploadUserList();
+}
+
+function renderUploadUserPills(){
+  const wrap = document.getElementById('upload-user-pills');
+  if(!wrap) return;
+  if(!uploadSelectedUsers.length){ wrap.innerHTML=''; return; }
+  wrap.innerHTML = uploadSelectedUsers.map(id=>{
+    const u = USERS.find(u=>u.id===id); if(!u) return '';
+    return `<span class="share-pill">
+      <span class="pill-av" style="background:${u.color}">${u.initials}</span>
+      ${u.name}
+      <button onclick="removeUploadUser(${u.id})">&#215;</button>
+    </span>`;
+  }).join('');
+}
+
+function saveUpload(){
+  const name = document.getElementById('upload-file-name').value.trim();
+  if(!name){ showToast('Escribe un nombre para el archivo'); return; }
+  closeModal('upload-modal-overlay');
+  showToast(`"${name}" subido correctamente`);
+}
+
+/* -- DROPZONE -- */
 (function(){
-  const dz=document.getElementById('upload-dropzone'); if(!dz) return;
-  dz.addEventListener('click',()=>showToast('Selector de archivos (simulación)'));
-  dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('dz-over')});
-  dz.addEventListener('dragleave',()=>dz.classList.remove('dz-over'));
-  dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('dz-over');const f=e.dataTransfer.files[0];if(f)showToast(`${f.name} listo para subir`);});
+  // Old page dropzone (hidden but kept for compat)
+  const dz=document.getElementById('upload-dropzone');
+  if(dz){
+    dz.addEventListener('click',()=>showToast('Selector de archivos (simulación)'));
+    dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('dz-over')});
+    dz.addEventListener('dragleave',()=>dz.classList.remove('dz-over'));
+    dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('dz-over');});
+  }
+  // Modal dropzone
+  const mdz=document.getElementById('upload-modal-dropzone');
+  if(mdz){
+    function setFile(name){
+      document.getElementById('upload-file-name').value = name.replace(/\.[^.]+$/,'');
+      const lbl = document.getElementById('upload-modal-filename');
+      lbl.textContent = name;
+      lbl.style.display = 'block';
+    }
+    mdz.addEventListener('click',()=>{
+      const inp=document.createElement('input'); inp.type='file';
+      inp.accept='.pdf,.docx,.xlsx,.pptx';
+      inp.onchange=()=>{ if(inp.files[0]) setFile(inp.files[0].name); };
+      inp.click();
+    });
+    mdz.addEventListener('dragover',e=>{e.preventDefault();mdz.classList.add('dz-over')});
+    mdz.addEventListener('dragleave',()=>mdz.classList.remove('dz-over'));
+    mdz.addEventListener('drop',e=>{
+      e.preventDefault(); mdz.classList.remove('dz-over');
+      const f=e.dataTransfer.files[0]; if(f) setFile(f.name);
+    });
+  }
 })();
 </script>
+
+<!-- ══════════════ MODAL: SUBIR ARCHIVO ══════════════ -->
+<div class="modal-overlay" id="upload-modal-overlay" onclick="closeOnOverlay(event,'upload-modal-overlay')">
+  <div class="modal-box modal-lg">
+    <div class="modal-header">
+      <div class="modal-title" style="display:flex;align-items:center;gap:8px">
+        <span style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;background:#fdf0ee;border-radius:7px;flex-shrink:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c0392b" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></span>
+        Subir Archivo
+      </div>
+      <button class="modal-close" onclick="closeModal('upload-modal-overlay')">&#x2715;</button>
+    </div>
+    <div class="modal-body">
+
+      <!-- Dropzone -->
+      <div class="dropzone" id="upload-modal-dropzone" style="margin-bottom:16px;padding:28px 20px">
+        <div style="font-size:32px;margin-bottom:8px">&#128196;</div>
+        <div style="font-size:14px;font-weight:700;color:#111;margin-bottom:4px">Arrastra tu archivo aquí</div>
+        <div style="font-size:12px;color:#aaa;margin-bottom:10px">o haz clic para seleccionar desde tu computadora</div>
+        <span class="dz-btn" style="font-size:12px;padding:6px 14px">Seleccionar archivo</span>
+        <div style="font-size:11px;color:#ccc;margin-top:8px">PDF, DOCX, XLSX &middot; Máx. 50 MB</div>
+      </div>
+      <div id="upload-modal-filename" style="display:none;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:8px;padding:8px 12px;font-size:13px;color:#333;margin-bottom:4px"></div>
+
+      <!-- Nombre del Archivo -->
+      <label class="form-label" style="margin-top:0">Nombre del Archivo</label>
+      <input class="form-input" id="upload-file-name" type="text" placeholder="ej. Manual de Operaciones Q2 2025…"/>
+
+      <!-- Guardar en -->
+      <label class="form-label">Guardar en</label>
+      <select class="form-input" id="upload-modal-folder">
+        <option value="">Juan's (raíz)</option>
+      </select>
+
+      <!-- Acceso por Locación -->
+      <label class="form-label">Acceso por Locación</label>
+      <select class="form-input">
+        <option value="">Todas las locaciones</option>
+        <option>Long Beach</option><option>Gulfport</option><option>Biloxi</option>
+      </select>
+
+      <!-- Acceso por Departamento — checkboxes -->
+      <label class="form-label">Acceso por Departamento</label>
+      <div style="background:#f8f8f8;border:1.5px solid #e8e8e8;border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:7px">
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#333;cursor:pointer;user-select:none"><input type="checkbox" value="Cocina" style="accent-color:#c0392b;width:14px;height:14px"> Cocina</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#333;cursor:pointer;user-select:none"><input type="checkbox" value="RRHH" style="accent-color:#c0392b;width:14px;height:14px"> RRHH</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#333;cursor:pointer;user-select:none"><input type="checkbox" value="Marketing" style="accent-color:#c0392b;width:14px;height:14px"> Marketing</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#333;cursor:pointer;user-select:none"><input type="checkbox" value="Operaciones" style="accent-color:#c0392b;width:14px;height:14px"> Operaciones</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#333;cursor:pointer;user-select:none"><input type="checkbox" value="Finanzas" style="accent-color:#c0392b;width:14px;height:14px"> Finanzas</label>
+      </div>
+
+      <!-- Acceso por Puesto -->
+      <label class="form-label">Acceso por Puesto</label>
+      <select class="form-input">
+        <option value="all">Todo el personal</option>
+        <option value="role">Solo gerentes</option>
+        <option value="floor">Meseros y hostess</option>
+        <option value="kitchen">Cocineros</option>
+        <option value="admin">Personal administrativo</option>
+      </select>
+
+      <!-- Acceso por Usuario — search + list + pills -->
+      <label class="form-label">Acceso por Usuario</label>
+      <input type="text" class="form-input" id="upload-user-search" placeholder="Buscar usuario…" oninput="renderUploadUserList()" style="margin-bottom:6px"/>
+      <div id="upload-user-list" style="max-height:180px;overflow-y:auto;display:flex;flex-direction:column;gap:4px"></div>
+      <div id="upload-user-pills" style="display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;min-height:0"></div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="modal-cancel" onclick="closeModal('upload-modal-overlay')">Cancelar</button>
+      <button class="modal-save" onclick="saveUpload()">Subir Archivo</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
