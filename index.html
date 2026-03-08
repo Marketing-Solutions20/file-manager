@@ -32,27 +32,51 @@ input,select,textarea{outline:none;font-family:inherit}
 .app-layout{display:flex;min-height:100vh}
 
 /* ── SIDEBAR ─────────────────────────────────────── */
-.sidebar{width:240px;background:#111;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;flex-shrink:0}
-.sidebar-logo{padding:24px 24px 20px;border-bottom:1px solid rgba(255,255,255,.07)}
-.sidebar-logo img{height:28px}
-.sidebar-admin-tag{font-size:10px;color:#c0392b;letter-spacing:.15em;text-transform:uppercase;font-weight:700;margin-top:8px}
-.sidebar-nav{flex:1;padding:16px 0}
-.nav-section-label{font-size:10px;color:#444;letter-spacing:.15em;text-transform:uppercase;font-weight:700;padding:16px 24px 8px}
-.nav-item{display:flex;align-items:center;gap:12px;padding:10px 24px;color:#888;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;border-left:2.5px solid transparent;text-decoration:none}
+.sidebar{width:240px;background:#111;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:width .22s ease;overflow:hidden}
+.sidebar.collapsed{width:56px}
+
+/* Logo area */
+.sidebar-logo{padding:18px 16px 16px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:10px;min-height:70px}
+.sidebar-logo-img{height:28px;flex-shrink:0;transition:opacity .2s}
+.sidebar.collapsed .sidebar-logo-img{display:none}
+.sidebar-admin-tag{font-size:10px;color:#c0392b;letter-spacing:.15em;text-transform:uppercase;font-weight:700;flex:1;white-space:nowrap}
+.sidebar.collapsed .sidebar-admin-tag{display:none}
+
+/* Canva-style toggle button — lives in sidebar header */
+.sidebar-toggle{width:32px;height:32px;border-radius:7px;border:none;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.55);flex-shrink:0;transition:background .15s,color .15s;margin-left:auto}
+.sidebar-toggle:hover{background:rgba(255,255,255,.15);color:#fff}
+.sidebar.collapsed .sidebar-toggle{margin-left:0}
+
+/* Nav */
+.sidebar-nav{flex:1;padding:12px 0;overflow:hidden}
+.nav-section-label{font-size:10px;color:#444;letter-spacing:.15em;text-transform:uppercase;font-weight:700;padding:14px 20px 6px;white-space:nowrap;overflow:hidden}
+.sidebar.collapsed .nav-section-label{opacity:0;pointer-events:none;padding:14px 0 6px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:10px 20px;color:#888;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;border-left:2.5px solid transparent;white-space:nowrap}
 .nav-item:hover{color:#ddd;background:rgba(255,255,255,.04);border-left-color:rgba(192,57,43,.4)}
 .nav-item.active{color:#fff;background:rgba(255,255,255,.06);border-left-color:#c0392b}
-.nav-icon{font-size:16px;width:20px;text-align:center}
-.sidebar-footer{padding:20px 24px;border-top:1px solid rgba(255,255,255,.07)}
-.admin-user-card{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.nav-icon{font-size:17px;width:20px;text-align:center;flex-shrink:0}
+.nav-label{overflow:hidden;transition:opacity .15s}
+.sidebar.collapsed .nav-label{display:none}
+.sidebar.collapsed .nav-item{padding:11px 0;justify-content:center;border-left-color:transparent}
+.sidebar.collapsed .nav-item.active{border-left-color:transparent;background:rgba(255,255,255,.1)}
+.sidebar.collapsed .nav-item:hover{border-left-color:transparent}
+
+/* Footer */
+.sidebar-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,.07)}
+.sidebar.collapsed .sidebar-footer{padding:12px 0;display:flex;justify-content:center}
+.admin-user-card{display:flex;align-items:center;gap:10px;margin-bottom:12px}
 .admin-avatar{width:32px;height:32px;border-radius:50%;background:#c0392b;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;flex-shrink:0}
-.admin-name{font-size:13px;color:#ccc;line-height:1.3}
-.admin-role{font-size:11px;color:#555}
-.logout-btn{width:100%;padding:8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:6px;color:#666;font-size:12px}
+.admin-name{font-size:13px;color:#ccc;line-height:1.3;white-space:nowrap}
+.admin-role{font-size:11px;color:#555;white-space:nowrap}
+.logout-btn{width:100%;padding:8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:6px;color:#666;font-size:12px;white-space:nowrap}
 .logout-btn:hover{color:#ccc;background:rgba(255,255,255,.08)}
+.sidebar.collapsed .admin-user-card,.sidebar.collapsed .logout-btn{display:none}
 
 /* ── MAIN CONTENT ────────────────────────────────── */
-.main-content{margin-left:240px;flex:1;display:flex;flex-direction:column;min-height:100vh}
-.topbar{background:#fff;border-bottom:1.5px solid #e8e8e8;padding:0 36px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.main-content{margin-left:240px;flex:1;display:flex;flex-direction:column;min-height:100vh;transition:margin-left .22s ease}
+.main-content.expanded{margin-left:56px}
+.topbar{background:#fff;border-bottom:1.5px solid #e8e8e8;padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;gap:12px}
+.topbar-left{display:flex;align-items:center;gap:14px}
 .topbar-title{font-size:18px;font-weight:700;color:#111;font-family:Georgia,serif}
 .topbar-actions{display:flex;align-items:center;gap:10px}
 .btn-primary{padding:8px 18px;background:#111;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700}
@@ -81,14 +105,14 @@ input,select,textarea{outline:none;font-family:inherit}
 .section-label::after{content:"";flex:1;height:1px;background:#e8e8e8}
 
 /* ── DOCS TABLE ──────────────────────────────────── */
-.filters-bar{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;align-items:center}
-.filter-select{padding:8px 12px;background:#fff;border:1.5px solid #e8e8e8;border-radius:8px;color:#555;font-size:13px;min-width:140px}
-.search-input{padding:8px 14px;background:#fff;border:1.5px solid #e8e8e8;border-radius:8px;color:#111;font-size:13px;width:220px}
+.filters-bar{display:flex;gap:8px;margin-bottom:18px;align-items:center;flex-wrap:nowrap;overflow-x:auto}
+.filter-select{padding:7px 10px;background:#fff;border:1.5px solid #e8e8e8;border-radius:8px;color:#555;font-size:12px;min-width:120px;flex-shrink:0}
+.search-input{padding:7px 12px;background:#fff;border:1.5px solid #e8e8e8;border-radius:8px;color:#111;font-size:12px;width:170px;flex-shrink:0}
 .search-input:focus{border-color:#c0392b}
 .docs-table{background:#fff;border:1.5px solid #e8e8e8;border-radius:14px;overflow:hidden}
-.table-head{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 120px;gap:0;background:#fafafa;border-bottom:1.5px solid #e8e8e8;padding:12px 20px}
+.table-head{display:grid;grid-template-columns:2fr 0.75fr 0.85fr 0.85fr 100px;gap:0;background:#fafafa;border-bottom:1.5px solid #e8e8e8;padding:12px 20px}
 .th{font-size:11px;color:#aaa;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
-.table-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 120px;gap:0;padding:14px 20px;border-bottom:1px solid #f0f0f0;align-items:center;transition:background .15s}
+.table-row{display:grid;grid-template-columns:2fr 0.75fr 0.85fr 0.85fr 100px;gap:0;padding:14px 20px;border-bottom:1px solid #f0f0f0;align-items:center;transition:background .15s}
 .table-row:last-child{border-bottom:none}
 .table-row:hover{background:#fafafa}
 .doc-name-cell{display:flex;align-items:center;gap:12px}
@@ -103,12 +127,12 @@ input,select,textarea{outline:none;font-family:inherit}
 .dept-ops{background:#edfbf3;color:#27ae60}
 .dept-finance{background:#eef4ff;color:#2980b9}
 .new-tag{font-size:10px;padding:2px 8px;border-radius:8px;background:#edfbf3;color:#27ae60;font-weight:700;border:1px solid #c3efd4;margin-left:6px}
-.action-btns{display:flex;gap:6px}
-.btn-icon{padding:6px 12px;border-radius:6px;font-size:12px;font-weight:600}
-.btn-edit{background:#f5f5f5;color:#555;border:1px solid #e8e8e8}
-.btn-edit:hover{background:#eee;color:#111}
-.btn-del{background:#fff5f3;color:#c0392b;border:1px solid #f0d5d0}
-.btn-del:hover{background:#fde8e4;color:#a93226}
+.action-btns{display:flex;gap:1px;flex-shrink:0;align-items:center}
+.btn-icon{padding:4px 6px;border-radius:6px;font-size:14px;font-weight:600;line-height:1;background:none;border:none;color:#999;transition:color .15s}
+.btn-icon:hover{color:#111}
+.btn-edit:hover{color:#2980b9}
+.btn-del:hover{color:#c0392b}
+.btn-share:hover{color:#27ae60}
 
 /* ── UPLOAD ──────────────────────────────────────── */
 .upload-layout{display:grid;grid-template-columns:1fr 340px;gap:24px;align-items:start}
@@ -174,7 +198,7 @@ input,select,textarea{outline:none;font-family:inherit}
 .footer-text{font-size:11px;color:#444}
 .footer-text span{color:#555}
 
-/* ── MODAL ───────────────────────────────────────── */
+/* ── USER MODAL ──────────────────────────────────── */
 #user-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:999;align-items:center;justify-content:center}
 #user-modal-overlay.open{display:flex}
 .user-modal{background:#fff;border-radius:16px;width:480px;max-width:90vw;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.15)}
@@ -186,6 +210,90 @@ input,select,textarea{outline:none;font-family:inherit}
 .modal-cancel{padding:9px 18px;background:#f5f5f5;border:1.5px solid #eee;border-radius:8px;color:#777;font-size:13px;cursor:pointer;font-weight:600}
 .modal-save{padding:9px 24px;background:#111;border:none;border-radius:8px;color:#fff;font-size:13px;font-weight:700;cursor:pointer}
 .modal-save:hover{background:#c0392b}
+
+/* ── FOLDERS ─────────────────────────────────────── */
+.folders-section{margin-bottom:28px}
+.folders-section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.folders-section-title{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#bbb;font-weight:700;display:flex;align-items:center;gap:12px;flex:1}
+.folders-section-title::after{content:"";flex:1;height:1px;background:#e8e8e8}
+.folders-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:12px;margin-top:14px}
+.folder-card{background:#fff;border:1.5px solid #e8e8e8;border-radius:12px;padding:18px 16px 14px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.folder-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:transparent;transition:background .2s}
+.folder-card:hover{border-color:#ddd;box-shadow:0 4px 18px rgba(0,0,0,.07);transform:translateY(-1px)}
+.folder-card:hover::before{background:var(--fc,#c0392b)}
+.folder-emoji{font-size:28px;margin-bottom:10px;display:block}
+.folder-name{font-size:13px;font-weight:700;color:#111;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.folder-docs-count{font-size:11px;color:#bbb;margin-bottom:10px}
+.folder-perm{font-size:10px;padding:2px 8px;border-radius:6px;font-weight:600;display:inline-block}
+.perm-all{background:#edfbf3;color:#27ae60}
+.perm-dept{background:#eef4ff;color:#2980b9}
+.perm-role{background:#fff5e8;color:#e67e22}
+.perm-restricted{background:#fff5f3;color:#c0392b}
+.folder-hover-actions{position:absolute;top:8px;right:8px;display:flex;gap:4px;opacity:0;transition:opacity .15s}
+.folder-card:hover .folder-hover-actions{opacity:1}
+.folder-btn-sm{width:26px;height:26px;border-radius:6px;border:1px solid #e8e8e8;background:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s}
+.folder-btn-sm:hover{background:#f5f5f5}
+.folder-btn-sm.del:hover{background:#fff5f3;border-color:#f0d5d0;color:#c0392b}
+
+/* ── FOLDER MODAL ────────────────────────────────── */
+#folder-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1000;align-items:center;justify-content:center}
+#folder-modal-overlay.open{display:flex}
+.folder-modal{background:#fff;border-radius:16px;width:460px;max-width:93vw;box-shadow:0 24px 70px rgba(0,0,0,.18)}
+.folder-modal-header{padding:22px 26px 18px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center}
+.folder-modal-title{font-size:16px;font-weight:700;color:#111;font-family:Georgia,serif}
+.folder-modal-body{padding:24px 26px}
+.folder-modal-footer{padding:16px 26px;border-top:1px solid #eee;display:flex;gap:10px;justify-content:flex-end}
+
+
+/* ── SHARE MODAL ─────────────────────────────────── */
+#share-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1100;align-items:center;justify-content:center}
+#share-modal-overlay.open{display:flex}
+.share-perm-btn{flex:1;padding:9px 8px;border:1.5px solid #e8e8e8;border-radius:10px;font-size:12px;font-weight:600;color:#666;cursor:pointer;text-align:center;transition:all .15s;background:#fff}
+.share-perm-btn:hover{border-color:#bbb;color:#333}
+.share-perm-btn.active{border-color:#c0392b;background:#fff5f3;color:#c0392b}
+.share-channel{flex:1;border:1.5px solid #e8e8e8;border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .15s;background:#fff}
+.share-channel:hover{border-color:#bbb}
+.share-channel.active{border-color:#c0392b;background:#fff5f3}
+.share-ch-label{font-size:11px;font-weight:700;color:#555}
+.share-channel.active .share-ch-label{color:#c0392b}
+.share-tabs{display:flex;gap:4px;background:#f5f4f0;border-radius:10px;padding:4px}
+.share-tab{flex:1;padding:7px;border:none;background:none;border-radius:7px;font-size:12px;font-weight:600;color:#888;cursor:pointer;transition:all .15s}
+.share-tab.active{background:#fff;color:#111;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.share-user-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1.5px solid #e8e8e8;border-radius:10px;cursor:pointer;transition:all .15s;background:#fff}
+.share-user-row:hover{border-color:#c0392b;background:#fff5f3}
+.share-user-row.selected{border-color:#c0392b;background:#fff5f3}
+.share-user-pill{display:inline-flex;align-items:center;gap:5px;padding:4px 10px 4px 6px;background:#fff5f3;border:1.5px solid #f0d5d0;border-radius:20px;font-size:12px;font-weight:600;color:#c0392b}
+.share-user-pill button{background:none;border:none;color:#c0392b;font-size:14px;line-height:1;padding:0;margin-left:2px;cursor:pointer;opacity:.6}
+.share-user-pill button:hover{opacity:1}
+
+/* ── FOLDER CHIPS (Drive-style) ──────────────────── */
+.folder-chip{display:inline-flex;align-items:center;gap:7px;padding:6px 14px 6px 10px;background:#fff;border:1.5px solid #e8e8e8;border-radius:20px;font-size:13px;font-weight:600;color:#333;cursor:pointer;transition:all .18s;white-space:nowrap}
+.folder-chip:hover{border-color:#bbb;background:#f5f5f5}
+.folder-chip.active{border-color:#c0392b;background:#fff5f3;color:#c0392b}
+.folder-chip-icon{font-size:15px;line-height:1}
+.folder-chip-count{font-size:11px;color:#bbb;font-weight:500}
+.folder-chip.active .folder-chip-count{color:#e8a89e}
+
+
+.view-controls{display:flex;align-items:center;gap:6px;margin-left:auto;flex-shrink:0}
+.view-sort-select{padding:7px 10px;background:#fff;border:1.5px solid #e8e8e8;border-radius:8px;color:#555;font-size:12px;flex-shrink:0}
+.view-sort-select:focus{border-color:#c0392b}
+.view-toggle{display:flex;gap:2px;background:#f5f5f5;border:1.5px solid #e8e8e8;border-radius:8px;padding:3px}
+.view-toggle-btn{width:30px;height:28px;border:none;background:transparent;border-radius:6px;color:#999;font-size:14px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s}
+.view-toggle-btn:hover{color:#555;background:rgba(0,0,0,.05)}
+.view-toggle-btn.active{background:#fff;color:#111;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+
+/* ── DOCS GRID VIEW ──────────────────────────────── */
+.docs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-top:0}
+.doc-grid-card{background:#fff;border:1.5px solid #e8e8e8;border-radius:12px;padding:18px 16px 14px;transition:all .2s;position:relative}
+.doc-grid-card:hover{border-color:#ddd;box-shadow:0 4px 18px rgba(0,0,0,.07)}
+.doc-grid-icon{width:44px;height:44px;border-radius:10px;background:#fff5f3;border:1px solid #f0d5d0;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:12px}
+.doc-grid-title{font-size:13px;font-weight:700;color:#111;margin-bottom:4px;line-height:1.3}
+.doc-grid-meta{font-size:11px;color:#bbb;margin-bottom:10px}
+.doc-grid-footer{display:flex;align-items:center;justify-content:space-between}
+
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;padding:10px 22px;border-radius:10px;font-size:13px;font-weight:600;opacity:0;transition:all .3s;z-index:2000;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
@@ -193,7 +301,7 @@ input,select,textarea{outline:none;font-family:inherit}
 <!-- LOGIN -->
 <div id="login-screen">
   <div class="login-left">
-<img src="logo.jpg" alt="Logo" style="height:50px;">
+    <img src="logo.jpg" alt="Logo" style="height:50px;">
     <div class="login-tagline">Panel de Administración</div>
   </div>
   <div class="login-right">
@@ -213,19 +321,25 @@ input,select,textarea{outline:none;font-family:inherit}
 <div class="app-layout">
 
   <!-- SIDEBAR -->
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
-<img src="logo.jpg" alt="Logo" style="height:50px;">
+      <img src="logo.jpg" alt="Logo" class="sidebar-logo-img">
       <div class="sidebar-admin-tag">Administrador</div>
+      <button class="sidebar-toggle" onclick="toggleSidebar()" title="Colapsar menú">
+        <svg width="18" height="16" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="1" width="6" height="16" rx="2" stroke="currentColor" stroke-width="1.7" fill="none"/>
+          <rect x="10" y="1" width="9" height="16" rx="2" stroke="currentColor" stroke-width="1.7" fill="none"/>
+        </svg>
+      </button>
     </div>
     <nav class="sidebar-nav">
       <div class="nav-section-label">Principal</div>
-      <div class="nav-item active" onclick="switchSection('docs',this)"><span class="nav-icon">📁</span>Documentos</div>
-      <div class="nav-item" onclick="switchSection('upload',this)"><span class="nav-icon">⬆</span>Subir Archivo</div>
+      <div class="nav-item active" onclick="switchSection('docs',this)"><span class="nav-icon">📁</span><span class="nav-label">Documentos</span></div>
+      <div class="nav-item" onclick="switchSection('upload',this)"><span class="nav-icon">⬆</span><span class="nav-label">Subir Archivo</span></div>
       <div class="nav-section-label">Comunicación</div>
-      <div class="nav-item" onclick="switchSection('announcements',this)"><span class="nav-icon">📣</span>Avisos</div>
+      <div class="nav-item" onclick="switchSection('announcements',this)"><span class="nav-icon">📣</span><span class="nav-label">Avisos</span></div>
       <div class="nav-section-label">Gestión</div>
-      <div class="nav-item" onclick="switchSection('users',this)"><span class="nav-icon">👥</span>Usuarios</div>
+      <div class="nav-item" onclick="switchSection('users',this)"><span class="nav-icon">👥</span><span class="nav-label">Usuarios</span></div>
     </nav>
     <div class="sidebar-footer">
       <div class="admin-user-card">
@@ -245,112 +359,93 @@ input,select,textarea{outline:none;font-family:inherit}
     <!-- ═══ DOCUMENTOS ═══ -->
     <div class="tab-panel active" id="section-docs">
       <div class="topbar">
-        <div class="topbar-title">📁 Documentos</div>
+        <div class="topbar-left">
+          <div class="topbar-title">📁 Documentos</div>
+        </div>
         <div class="topbar-actions">
           <button class="btn-secondary">⬇ Exportar</button>
+          <button class="btn-secondary" onclick="openFolderModal()">📂 Nueva Carpeta</button>
           <button class="btn-primary" onclick="switchSection('upload',null)">+ Subir Archivo</button>
         </div>
       </div>
       <div class="page">
         <div class="stats-grid">
           <div class="stat-card stat-accent">
-            <div class="stat-icon">📄</div>
+            <div class="stat-label">Carpetas</div>
+            <div class="stat-value" id="stat-folders">4</div>
+            <div class="stat-sub">Con permisos activos</div>
+          </div>
+          <div class="stat-card">
             <div class="stat-label">Total Documentos</div>
             <div class="stat-value">12</div>
             <div class="stat-sub"><span class="stat-up">+3</span> este mes</div>
           </div>
           <div class="stat-card">
-            <div class="stat-icon">🏢</div>
-            <div class="stat-label">Departamentos</div>
-            <div class="stat-value">5</div>
-            <div class="stat-sub">Activos</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon">👥</div>
-            <div class="stat-label">Usuarios Activos</div>
-            <div class="stat-value">18</div>
-            <div class="stat-sub">4 sucursales</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon">⬇</div>
             <div class="stat-label">Descargas (mes)</div>
             <div class="stat-value">47</div>
             <div class="stat-sub"><span class="stat-up">↑ 12%</span> vs anterior</div>
           </div>
+          <div class="stat-card">
+            <div class="stat-label">Usuarios Activos</div>
+            <div class="stat-value">18</div>
+            <div class="stat-sub">4 locaciones</div>
+          </div>
         </div>
 
-        <div class="section-header">
-          <div class="section-title">Todos los documentos</div>
-        </div>
+        <!-- DOCUMENTOS -->
+
         <div class="filters-bar">
-          <input class="search-input" placeholder="🔍  Buscar documentos..." type="text"/>
-          <select class="filter-select">
-            <option>Todos los departamentos</option>
-            <option>Cocina</option>
-            <option>RRHH</option>
-            <option>Marketing</option>
-            <option>Operaciones</option>
-            <option>Finanzas</option>
+          <input class="search-input" id="filter-search" placeholder="Buscar documentos..." type="text" oninput="applyFilters()"/>
+          <select class="filter-select" id="filter-folder" onchange="applyFilters()">
+            <!-- populated by JS -->
           </select>
-          <select class="filter-select">
-            <option>Todas las sucursales</option>
-            <option>Long Beach</option>
-            <option>Gulfport</option>
-            <option>Biloxi</option>
+          <select class="filter-select" id="filter-dept" onchange="applyFilters()">
+            <option value="">Todos los departamentos</option>
+            <option>Cocina</option><option>RRHH</option><option>Marketing</option><option>Operaciones</option><option>Finanzas</option>
           </select>
+          <select class="filter-select" id="filter-loc" onchange="applyFilters()">
+            <option value="">Todas las locaciones</option>
+            <option>Long Beach</option><option>Gulfport</option><option>Biloxi</option>
+          </select>
+          <div class="view-controls">
+            <select class="view-sort-select" id="sort-select" onchange="applyFilters()">
+              <option value="date-desc">Más recientes primero</option>
+              <option value="date-asc">Más antiguos primero</option>
+              <option value="name-asc">Nombre A → Z</option>
+              <option value="name-desc">Nombre Z → A</option>
+              <option value="size-desc">Mayor tamaño</option>
+              <option value="size-asc">Menor tamaño</option>
+              <option value="dept">Por departamento</option>
+            </select>
+            <div class="view-toggle">
+              <button class="view-toggle-btn active" id="btn-view-list" onclick="setView('list')" title="Vista lista">☰</button>
+              <button class="view-toggle-btn" id="btn-view-grid" onclick="setView('grid')" title="Vista cuadrícula">⊞</button>
+            </div>
+          </div>
         </div>
 
-        <div class="docs-table">
+        <div class="docs-table" id="docs-list-view">
           <div class="table-head">
             <div class="th">Nombre</div>
+            <div class="th">Locación</div>
             <div class="th">Departamento</div>
-            <div class="th">Tamaño</div>
             <div class="th">Actualizado</div>
             <div class="th">Acciones</div>
           </div>
-          <div class="table-row">
-            <div class="doc-name-cell"><div class="doc-icon-sm">📄</div><div><div class="doc-title">Manual de Identidad de Marca 2025 <span class="new-tag">NUEVO</span></div><div class="doc-sub">Acceso: todos los puestos</div></div></div>
-            <div class="td"><span class="dept-tag dept-marketing">Marketing</span></div>
-            <div class="td">12.4 MB</div>
-            <div class="td">Hace 2 días</div>
-            <div class="action-btns"><button class="btn-icon btn-edit">✏</button><button class="btn-icon btn-del">🗑</button></div>
-          </div>
-          <div class="table-row">
-            <div class="doc-name-cell"><div class="doc-icon-sm">📋</div><div><div class="doc-title">Manual de Servicio al Cliente</div><div class="doc-sub">Acceso: meseros, hostess</div></div></div>
-            <div class="td"><span class="dept-tag dept-ops">Operaciones</span></div>
-            <div class="td">3.8 MB</div>
-            <div class="td">Hace 1 sem</div>
-            <div class="action-btns"><button class="btn-icon btn-edit">✏</button><button class="btn-icon btn-del">🗑</button></div>
-          </div>
-          <div class="table-row">
-            <div class="doc-name-cell"><div class="doc-icon-sm">📋</div><div><div class="doc-title">Manual de Cocina y Recetas</div><div class="doc-sub">Acceso: cocineros, sous chef</div></div></div>
-            <div class="td"><span class="dept-tag dept-kitchen">Cocina</span></div>
-            <div class="td">8.1 MB</div>
-            <div class="td">Hace 2 sem</div>
-            <div class="action-btns"><button class="btn-icon btn-edit">✏</button><button class="btn-icon btn-del">🗑</button></div>
-          </div>
-          <div class="table-row">
-            <div class="doc-name-cell"><div class="doc-icon-sm">📄</div><div><div class="doc-title">Políticas de Recursos Humanos</div><div class="doc-sub">Acceso: todo el personal</div></div></div>
-            <div class="td"><span class="dept-tag dept-rrhh">RRHH</span></div>
-            <div class="td">2.3 MB</div>
-            <div class="td">Hace 1 mes</div>
-            <div class="action-btns"><button class="btn-icon btn-edit">✏</button><button class="btn-icon btn-del">🗑</button></div>
-          </div>
-          <div class="table-row">
-            <div class="doc-name-cell"><div class="doc-icon-sm">📊</div><div><div class="doc-title">Reporte Financiero Q1 2025</div><div class="doc-sub">Acceso: gerentes, finanzas</div></div></div>
-            <div class="td"><span class="dept-tag dept-finance">Finanzas</span></div>
-            <div class="td">1.9 MB</div>
-            <div class="td">Hace 3 sem</div>
-            <div class="action-btns"><button class="btn-icon btn-edit">✏</button><button class="btn-icon btn-del">🗑</button></div>
-          </div>
+          <!-- rows populated by JS -->
         </div>
+
+        <!-- Grid view (hidden by default) -->
+        <div class="docs-grid" id="docs-grid-view" style="display:none"></div>
       </div>
     </div>
 
     <!-- ═══ SUBIR ARCHIVO ═══ -->
     <div class="tab-panel" id="section-upload">
       <div class="topbar">
-        <div class="topbar-title">⬆ Subir Archivo</div>
+        <div class="topbar-left">
+          <div class="topbar-title">⬆ Subir Archivo</div>
+        </div>
         <div class="topbar-actions">
           <button class="btn-secondary" onclick="switchSection('docs',null)">← Volver a Documentos</button>
         </div>
@@ -369,11 +464,7 @@ input,select,textarea{outline:none;font-family:inherit}
               <label>Departamento destino</label>
               <select class="form-input">
                 <option>Selecciona un departamento…</option>
-                <option>Cocina</option>
-                <option>RRHH</option>
-                <option>Marketing</option>
-                <option>Operaciones</option>
-                <option>Finanzas</option>
+                <option>Cocina</option><option>RRHH</option><option>Marketing</option><option>Operaciones</option><option>Finanzas</option>
               </select>
               <label>Acceso por puesto</label>
               <select class="form-input">
@@ -383,12 +474,10 @@ input,select,textarea{outline:none;font-family:inherit}
                 <option>Cocineros</option>
                 <option>Personal administrativo</option>
               </select>
-              <label>Sucursal</label>
+              <label>Locación</label>
               <select class="form-input">
-                <option>Todas las sucursales</option>
-                <option>Long Beach</option>
-                <option>Gulfport</option>
-                <option>Biloxi</option>
+                <option>Todas las locaciones</option>
+                <option>Long Beach</option><option>Gulfport</option><option>Biloxi</option>
               </select>
               <label>Descripción (opcional)</label>
               <textarea class="form-input form-textarea" placeholder="Describe brevemente el contenido del documento…"></textarea>
@@ -425,7 +514,9 @@ input,select,textarea{outline:none;font-family:inherit}
     <!-- ═══ AVISOS ═══ -->
     <div class="tab-panel" id="section-announcements">
       <div class="topbar">
-        <div class="topbar-title">📣 Avisos</div>
+        <div class="topbar-left">
+          <div class="topbar-title">📣 Avisos</div>
+        </div>
         <div class="topbar-actions">
           <button class="btn-primary">+ Nuevo Aviso</button>
         </div>
@@ -471,11 +562,7 @@ input,select,textarea{outline:none;font-family:inherit}
               <div class="ann-form-title">Nuevo Aviso</div>
               <label class="form-label">Tipo</label>
               <select class="form-input">
-                <option>📣 Aviso general</option>
-                <option>⭐ Mensaje destacado</option>
-                <option>⚠ Urgente</option>
-                <option>🎉 Celebración</option>
-                <option>📌 Recordatorio</option>
+                <option>📣 Aviso general</option><option>⭐ Mensaje destacado</option><option>⚠ Urgente</option><option>🎉 Celebración</option><option>📌 Recordatorio</option>
               </select>
               <label class="form-label">Título</label>
               <input class="form-input" type="text" placeholder="Título del aviso…"/>
@@ -485,9 +572,7 @@ input,select,textarea{outline:none;font-family:inherit}
               <input class="form-input" type="text" value="Dirección General"/>
               <label class="form-label">Visible para</label>
               <select class="form-input">
-                <option>Todos los empleados</option>
-                <option>Solo gerentes</option>
-                <option>Sucursal específica</option>
+                <option>Todos los empleados</option><option>Solo gerentes</option><option>Locación específica</option>
               </select>
               <button class="form-submit">Publicar Aviso</button>
             </div>
@@ -499,7 +584,9 @@ input,select,textarea{outline:none;font-family:inherit}
     <!-- ═══ USUARIOS ═══ -->
     <div class="tab-panel" id="section-users">
       <div class="topbar">
-        <div class="topbar-title">👥 Usuarios</div>
+        <div class="topbar-left">
+          <div class="topbar-title">👥 Usuarios</div>
+        </div>
         <div class="topbar-actions">
           <button class="btn-secondary">⬇ Exportar lista</button>
           <button class="btn-primary" onclick="openUserModal()">+ Nuevo Usuario</button>
@@ -527,35 +614,35 @@ input,select,textarea{outline:none;font-family:inherit}
           </div>
           <div class="users-row">
             <div class="user-name-cell"><div class="user-av" style="background:#c0392b">CM</div><div><div style="font-size:13px;font-weight:600;color:#111">Carlos Martínez</div><div style="font-size:11px;color:#bbb">Mesero · Long Beach</div></div></div>
-            <div class="td">mesero.longbeach@juansrestaurants.com</div>
+            <div class="td"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="83e0e2f1efecf0adeee2f1f7eaede6f9c3e9f6e2edf0f1e6f0f7e2f6f1e2edf7f0ade0ecee">[email&#160;protected]</a></div>
             <div class="td"><span class="dept-tag dept-ops">Operaciones</span></div>
             <div class="td"><span class="status-active">Activo</span></div>
             <div class="action-btns"><button class="btn-icon btn-edit">✏</button><button class="btn-icon btn-del">🗑</button></div>
           </div>
           <div class="users-row">
             <div class="user-name-cell"><div class="user-av" style="background:#8e44ad">LR</div><div><div style="font-size:13px;font-weight:600;color:#111">Laura Reyes</div><div style="font-size:11px;color:#bbb">Coordinadora · RRHH</div></div></div>
-            <div class="td">l.reyes@juansrestaurants.com</div>
+            <div class="td"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9ff3feeaedfeb1edfae6faecdff5eafef1ecedfaecebfeeaedfef1ebecb1fcf0f2">[email&#160;protected]</a></div>
             <div class="td"><span class="dept-tag dept-rrhh">RRHH</span></div>
             <div class="td"><span class="status-active">Activo</span></div>
             <div class="action-btns"><button class="btn-icon btn-edit">✏</button><button class="btn-icon btn-del">🗑</button></div>
           </div>
           <div class="users-row">
             <div class="user-name-cell"><div class="user-av" style="background:#e67e22">JP</div><div><div style="font-size:13px;font-weight:600;color:#111">Jorge Pérez</div><div style="font-size:11px;color:#bbb">Chef · Cocina</div></div></div>
-            <div class="td">chef.jp@juansrestaurants.com</div>
+            <div class="td"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a8c2c7dacfcd86d8cddacdd2e8c2ddc9c6dbdacddbdcc9dddac9c6dcdb86cbc7c5">[email&#160;protected]</a></div>
             <div class="td"><span class="dept-tag dept-kitchen">Cocina</span></div>
             <div class="td"><span class="status-active">Activo</span></div>
             <div class="action-btns"><button class="btn-icon btn-edit">✏</button><button class="btn-icon btn-del">🗑</button></div>
           </div>
           <div class="users-row">
             <div class="user-name-cell"><div class="user-av" style="background:#2980b9">SM</div><div><div style="font-size:13px;font-weight:600;color:#111">Sofía Morales</div><div style="font-size:11px;color:#bbb">Contadora · Finanzas</div></div></div>
-            <div class="td">s.morales@juansrestaurants.com</div>
+            <div class="td"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bdced2dbd4dc93d0d2cfdcd1d8cefdd7c8dcd3cecfd8cec9dcc8cfdcd3c9ce93ded2d0">[email&#160;protected]</a></div>
             <div class="td"><span class="dept-tag dept-finance">Finanzas</span></div>
             <div class="td"><span class="status-active">Activo</span></div>
             <div class="action-btns"><button class="btn-icon btn-edit">✏</button><button class="btn-icon btn-del">🗑</button></div>
           </div>
           <div class="users-row">
             <div class="user-name-cell"><div class="user-av" style="background:#95a5a6">RG</div><div><div style="font-size:13px;font-weight:600;color:#111">Roberto Garza</div><div style="font-size:11px;color:#bbb">Host · Long Beach</div></div></div>
-            <div class="td">r.garza@juansrestaurants.com</div>
+            <div class="td"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6f1d000d0a1d1b0041080e1d150e2f051a0e011c1d0a1c1b0e1a1d0e011b1c410c0002">[email&#160;protected]</a></div>
             <div class="td"><span class="dept-tag dept-ops">Operaciones</span></div>
             <div class="td"><span class="status-inactive">Inactivo</span></div>
             <div class="action-btns"><button class="btn-icon btn-edit">✏</button><button class="btn-icon btn-del">🗑</button></div>
@@ -565,7 +652,7 @@ input,select,textarea{outline:none;font-family:inherit}
     </div>
 
     <footer class="site-footer">
-<img src="logo.jpg" alt="Logo" style="height:50px;">
+      <img src="logo.jpg" alt="Logo" style="height:50px;">
       <div class="footer-text">© 2026 Juan's Hub &nbsp;·&nbsp; <span>Created by Marketing Solutions</span></div>
     </footer>
 
@@ -573,7 +660,7 @@ input,select,textarea{outline:none;font-family:inherit}
 </div><!-- /app-layout -->
 </div><!-- /app -->
 
-<!-- USER MODAL -->
+<!-- ═══ USER MODAL ═══ -->
 <div id="user-modal-overlay" onclick="closeUserModalOutside(event)">
   <div class="user-modal">
     <div class="modal-header">
@@ -592,7 +679,7 @@ input,select,textarea{outline:none;font-family:inherit}
         <option>Selecciona…</option>
         <option>Cocina</option><option>RRHH</option><option>Marketing</option><option>Operaciones</option><option>Finanzas</option>
       </select>
-      <label class="form-label" style="margin-top:14px">Sucursal</label>
+      <label class="form-label" style="margin-top:14px">Locación</label>
       <select class="form-input">
         <option>Long Beach</option><option>Gulfport</option><option>Biloxi</option>
       </select>
@@ -604,19 +691,494 @@ input,select,textarea{outline:none;font-family:inherit}
   </div>
 </div>
 
+<!-- ═══ FOLDER MODAL ═══ -->
+<div id="folder-modal-overlay" onclick="closeFolderModalOutside(event)">
+  <div class="folder-modal">
+    <div class="folder-modal-header">
+      <div class="folder-modal-title" id="folder-modal-title">Nueva Carpeta</div>
+      <button class="modal-close" onclick="closeFolderModal()">✕</button>
+    </div>
+    <div class="folder-modal-body">
+
+      <label class="form-label" style="margin-top:0">Nombre de la carpeta</label>
+      <input class="form-input" id="folder-name-input" type="text" placeholder="Ej. Manuales de Cocina, Políticas 2025…"/>
+
+      <label class="form-label" style="margin-top:16px">Departamento</label>
+      <select class="form-input" id="folder-dept">
+        <option value="">Todos los departamentos</option>
+        <option>Cocina</option>
+        <option>RRHH</option>
+        <option>Marketing</option>
+        <option>Operaciones</option>
+        <option>Finanzas</option>
+      </select>
+
+      <label class="form-label" style="margin-top:16px">Acceso por puesto</label>
+      <select class="form-input" id="folder-role">
+        <option value="">Todo el personal</option>
+        <option>Solo gerentes</option>
+        <option>Meseros y hostess</option>
+        <option>Cocineros</option>
+        <option>Personal administrativo</option>
+      </select>
+
+      <label class="form-label" style="margin-top:16px">Locación</label>
+      <select class="form-input" id="folder-loc">
+        <option value="">Todas las locaciones</option>
+        <option>Long Beach</option>
+        <option>Gulfport</option>
+        <option>Biloxi</option>
+      </select>
+
+    </div>
+    <div class="folder-modal-footer">
+      <button class="modal-cancel" onclick="closeFolderModal()">Cancelar</button>
+      <button class="modal-save" id="folder-save-btn" onclick="saveFolder()">Crear Carpeta</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══ SHARE MODAL ═══ -->
+<div id="share-modal-overlay" onclick="if(event.target===this)closeShareModal()">
+  <div class="folder-modal" style="width:500px">
+    <div class="folder-modal-header">
+      <div class="folder-modal-title">Compartir enlace</div>
+      <button class="modal-close" onclick="closeShareModal()">✕</button>
+    </div>
+    <div class="folder-modal-body">
+
+      <!-- Doc name pill -->
+      <div id="share-doc-name" style="font-size:12px;color:#888;padding:7px 12px;background:#f8f8f6;border-radius:8px;font-weight:600;margin-bottom:0"></div>
+
+      <!-- ── Link settings ── -->
+      <label class="form-label" style="margin-top:18px">Permisos del enlace</label>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <div class="share-perm-btn active" id="perm-view"     onclick="setLinkPerm('view')">👁 Solo ver</div>
+        <div class="share-perm-btn"        id="perm-download" onclick="setLinkPerm('download')">⬇ Descargar</div>
+        <div class="share-perm-btn"        id="perm-edit"     onclick="setLinkPerm('edit')">✏ Editar</div>
+      </div>
+
+      <label class="form-label" style="margin-top:18px">Vigencia del enlace</label>
+      <select class="form-input" id="share-expiry" style="margin-top:8px">
+        <option value="1d">1 día</option>
+        <option value="7d" selected>7 días</option>
+        <option value="30d">30 días</option>
+        <option value="90d">90 días</option>
+        <option value="never">Sin vencimiento</option>
+      </select>
+
+      <!-- ── Enviar por ── -->
+      <label class="form-label" style="margin-top:18px">Enviar por</label>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <div class="share-channel" id="ch-email"    onclick="toggleChannel('email')"><div style="font-size:18px;margin-bottom:3px">✉️</div><div class="share-ch-label">Email</div></div>
+        <div class="share-channel" id="ch-whatsapp" onclick="toggleChannel('whatsapp')"><div style="font-size:18px;margin-bottom:3px">💬</div><div class="share-ch-label">WhatsApp</div></div>
+        <div class="share-channel" id="ch-sms"      onclick="toggleChannel('sms')"><div style="font-size:18px;margin-bottom:3px">📱</div><div class="share-ch-label">SMS</div></div>
+      </div>
+
+      <!-- ── Compartir por ── -->
+      <label class="form-label" style="margin-top:18px">Compartir por</label>
+      <div class="share-tabs" style="margin-top:8px">
+        <button class="share-tab active" id="stab-loc"  onclick="switchShareTab('loc')">Locación</button>
+        <button class="share-tab"        id="stab-dept" onclick="switchShareTab('dept')">Departamento</button>
+        <button class="share-tab"        id="stab-user" onclick="switchShareTab('user')">Usuario</button>
+      </div>
+
+      <div id="share-panel-loc" style="margin-top:10px">
+        <select class="form-input">
+          <option value="">Selecciona una locación…</option>
+          <option>Long Beach</option><option>Gulfport</option><option>Biloxi</option>
+        </select>
+      </div>
+
+      <div id="share-panel-dept" style="display:none;margin-top:10px">
+        <select class="form-input">
+          <option value="">Selecciona un departamento…</option>
+          <option>Cocina</option><option>RRHH</option><option>Marketing</option><option>Operaciones</option><option>Finanzas</option>
+        </select>
+      </div>
+
+      <div id="share-panel-user" style="display:none;margin-top:10px">
+        <input class="form-input" id="share-user-search" placeholder="Buscar por nombre o email…" type="text" oninput="filterShareUsers()"/>
+        <!-- Selected users pills -->
+        <div id="share-selected-users" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;min-height:0"></div>
+        <!-- User list -->
+        <div id="share-user-list" style="margin-top:8px;display:flex;flex-direction:column;gap:4px;max-height:180px;overflow-y:auto"></div>
+      </div>
+
+      <label class="form-label" style="margin-top:18px">Mensaje (opcional)</label>
+      <textarea class="form-input form-textarea" placeholder="Agrega un mensaje para los destinatarios…" style="min-height:64px;margin-top:8px"></textarea>
+
+    </div>
+    <div class="folder-modal-footer">
+      <button class="modal-cancel" onclick="closeShareModal()">Cancelar</button>
+      <button class="modal-save" onclick="sendShare()">Generar y enviar enlace</button>
+    </div>
+  </div>
+</div>
+
 <script>
-function doLogin(){document.getElementById("login-screen").style.display="none";document.getElementById("app").style.display="block"}
-function doLogout(){document.getElementById("app").style.display="none";document.getElementById("login-screen").style.display="flex"}
-function switchSection(sec,btn){
+/* ── NAVIGATION ──────────────────────────────────── */
+function doLogin(){
+  document.getElementById("login-screen").style.display="none";
+  document.getElementById("app").style.display="block";
+}
+function doLogout(){
+  document.getElementById("app").style.display="none";
+  document.getElementById("login-screen").style.display="flex";
+}
+function toggleSidebar(){
+  const sb = document.getElementById("sidebar");
+  const mc = document.querySelector(".main-content");
+  sb.classList.toggle("collapsed");
+  mc.classList.toggle("expanded", sb.classList.contains("collapsed"));
+}
+function switchSection(sec, btn){
   document.querySelectorAll(".tab-panel").forEach(p=>p.classList.remove("active"));
   document.getElementById("section-"+sec).classList.add("active");
-  if(btn){document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));btn.classList.add("active")}
-  else{document.querySelectorAll(".nav-item").forEach(n=>{if(n.textContent.toLowerCase().includes(sec.substr(0,4)))n.classList.add("active")})}
+  document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));
+  if(btn) btn.classList.add("active");
+  else {
+    document.querySelectorAll(".nav-item").forEach(n=>{
+      if(n.getAttribute("onclick") && n.getAttribute("onclick").includes("'"+sec+"'")){
+        n.classList.add("active");
+      }
+    });
+  }
 }
-function simulateUpload(){alert("Simulación: Documento subido correctamente ✓")}
-function openUserModal(){document.getElementById("user-modal-overlay").classList.add("open")}
-function closeUserModal(){document.getElementById("user-modal-overlay").classList.remove("open")}
-function closeUserModalOutside(e){if(e.target.id==="user-modal-overlay")closeUserModal()}
+
+/* ── USER MODAL ──────────────────────────────────── */
+function openUserModal(){
+  document.getElementById("user-modal-overlay").classList.add("open");
+}
+function closeUserModal(){
+  document.getElementById("user-modal-overlay").classList.remove("open");
+}
+function closeUserModalOutside(e){
+  if(e.target===document.getElementById("user-modal-overlay")) closeUserModal();
+}
+
+/* ── UPLOAD SIMULATION ───────────────────────────── */
+function simulateUpload(){
+  showToast("✓ Documento subido correctamente");
+}
+
+/* ── TOAST ───────────────────────────────────────── */
+function showToast(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg;
+  t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),2800);
+}
+
+/* ════════════════════════════════════════════════════
+   FOLDERS DATA & RENDERING
+════════════════════════════════════════════════════ */
+const DEPT_OPTIONS = [
+  {label:"Cocina",      color:"on-red"},
+  {label:"RRHH",        color:"on-purple"},
+  {label:"Marketing",   color:"on-orange"},
+  {label:"Operaciones", color:"on-green"},
+  {label:"Finanzas",    color:"on-blue"},
+];
+const ROLE_OPTIONS = [
+  {label:"Todo el personal",        color:"on-green"},
+  {label:"Solo gerentes",           color:"on-red"},
+  {label:"Meseros y hostess",       color:"on-blue"},
+  {label:"Cocineros",               color:"on-orange"},
+  {label:"Personal administrativo", color:"on-purple"},
+];
+const LOC_OPTIONS = [
+  {label:"Long Beach", color:"on-blue"},
+  {label:"Gulfport",   color:"on-green"},
+  {label:"Biloxi",     color:"on-orange"},
+];
+
+// Seed folders — all use 📁
+let folders = [
+  {id:1, name:"Manuales de Operaciones", docs:3, depts:["Operaciones"], roles:["Todo el personal"], locs:[]},
+  {id:2, name:"Documentos RRHH",         docs:4, depts:["RRHH"],        roles:["Solo gerentes","Personal administrativo"], locs:[]},
+  {id:3, name:"Finanzas & Reportes",     docs:2, depts:["Finanzas"],    roles:["Solo gerentes"], locs:[]},
+  {id:4, name:"Recetas y Menú Cocina",   docs:5, depts:["Cocina"],      roles:["Cocineros"], locs:["Long Beach","Gulfport","Biloxi"]},
+];
+
+function permLabel(f){
+  if(f.depts.length===0 && f.roles.length===0 && f.locs.length===0) return {cls:"perm-all", text:"🌐 Acceso general"};
+  if(f.roles.includes("Solo gerentes")) return {cls:"perm-restricted", text:"🔒 Solo gerentes"};
+  if(f.depts.length===1) return {cls:"perm-dept", text:"🏢 "+f.depts[0]};
+  return {cls:"perm-role", text:"👤 "+f.roles[0]};
+}
+
+function renderFolders(){
+  document.getElementById("stat-folders").textContent = folders.length;
+  // Populate folder filter dropdown
+  const sel = document.getElementById("filter-folder");
+  if(sel){
+    const cur = sel.value;
+    sel.innerHTML = '<option value="">Todas las carpetas</option>' +
+      folders.map(f=>`<option value="${f.id}">${f.name} (${f.docs} docs)</option>`).join('');
+    sel.value = cur; // preserve selection
+  }
+}
+
+
+
+/* ── FOLDER MODAL ────────────────────────────────── */
+let _editId = null;
+
+function openFolderModal(editId){
+  _editId = editId || null;
+  const f = editId ? folders.find(x=>x.id===editId) : null;
+
+  document.getElementById("folder-name-input").value = f ? f.name : "";
+  document.getElementById("folder-dept").value  = f ? (f.depts[0]||"") : "";
+  document.getElementById("folder-role").value  = f ? (f.roles[0]||"") : "";
+  document.getElementById("folder-loc").value   = f ? (f.locs[0]||"")  : "";
+  document.getElementById("folder-modal-title").textContent = f ? "Editar Carpeta" : "Nueva Carpeta";
+  document.getElementById("folder-save-btn").textContent    = f ? "Guardar Cambios" : "Crear Carpeta";
+
+  document.getElementById("folder-modal-overlay").classList.add("open");
+  setTimeout(()=>document.getElementById("folder-name-input").focus(), 80);
+}
+
+function closeFolderModal(){
+  document.getElementById("folder-modal-overlay").classList.remove("open");
+}
+function closeFolderModalOutside(e){
+  if(e.target===document.getElementById("folder-modal-overlay")) closeFolderModal();
+}
+
+function saveFolder(){
+  const name = document.getElementById("folder-name-input").value.trim();
+  if(!name){ document.getElementById("folder-name-input").style.borderColor="#c0392b"; return; }
+  document.getElementById("folder-name-input").style.borderColor="";
+
+  const dept = document.getElementById("folder-dept").value;
+  const role = document.getElementById("folder-role").value;
+  const loc  = document.getElementById("folder-loc").value;
+
+  if(_editId){
+    const f = folders.find(x=>x.id===_editId);
+    f.name  = name;
+    f.depts = dept ? [dept] : [];
+    f.roles = role ? [role] : [];
+    f.locs  = loc  ? [loc]  : [];
+    showToast("✓ Carpeta actualizada");
+  } else {
+    folders.push({ id:Date.now(), name, docs:0,
+      depts: dept ? [dept] : [],
+      roles: role ? [role] : [],
+      locs:  loc  ? [loc]  : []
+    });
+    showToast("✓ Carpeta creada");
+  }
+  renderFolders();
+  closeFolderModal();
+}
+
+/* ════════════════════════════════════════════════════
+   DOCS: DATA, FILTERING, SORTING & VIEW
+════════════════════════════════════════════════════ */
+const docsData = [
+  {icon:"📄", title:"Manual de Identidad de Marca 2025", isNew:true,  access:"todos los puestos",   dept:"Marketing",  deptClass:"dept-marketing", size:"12.4 MB", sizeMB:12.4, updated:"Hace 2 días", daysAgo:2,  folder:1, loc:"Long Beach"},
+  {icon:"📋", title:"Manual de Servicio al Cliente",     isNew:false, access:"meseros, hostess",     dept:"Operaciones",deptClass:"dept-ops",        size:"3.8 MB",  sizeMB:3.8,  updated:"Hace 1 sem",  daysAgo:7,  folder:1, loc:"Gulfport"},
+  {icon:"📋", title:"Manual de Cocina y Recetas",        isNew:false, access:"cocineros, sous chef", dept:"Cocina",     deptClass:"dept-kitchen",    size:"8.1 MB",  sizeMB:8.1,  updated:"Hace 2 sem",  daysAgo:14, folder:4, loc:"Long Beach"},
+  {icon:"📄", title:"Políticas de Recursos Humanos",     isNew:false, access:"todo el personal",     dept:"RRHH",       deptClass:"dept-rrhh",       size:"2.3 MB",  sizeMB:2.3,  updated:"Hace 1 mes",  daysAgo:30, folder:2, loc:"Biloxi"},
+  {icon:"📊", title:"Reporte Financiero Q1 2025",        isNew:false, access:"gerentes, finanzas",   dept:"Finanzas",   deptClass:"dept-finance",    size:"1.9 MB",  sizeMB:1.9,  updated:"Hace 3 sem",  daysAgo:21, folder:3, loc:"Gulfport"},
+  {icon:"📋", title:"Contrato Proveedor Bebidas",        isNew:false, access:"gerentes",             dept:"Finanzas",   deptClass:"dept-finance",    size:"0.8 MB",  sizeMB:0.8,  updated:"Hace 2 meses", daysAgo:60, folder:3, loc:"Long Beach"},
+  {icon:"📄", title:"Guía de Onboarding 2025",           isNew:true,  access:"todo el personal",     dept:"RRHH",       deptClass:"dept-rrhh",       size:"4.2 MB",  sizeMB:4.2,  updated:"Hace 3 días", daysAgo:3,  folder:2, loc:"Long Beach"},
+  {icon:"📋", title:"Recetas Temporada Verano",          isNew:false, access:"cocineros",            dept:"Cocina",     deptClass:"dept-kitchen",    size:"6.5 MB",  sizeMB:6.5,  updated:"Hace 1 sem",  daysAgo:8,  folder:4, loc:"Biloxi"},
+];
+
+let currentView = 'list';
+
+function applyFilters(){
+  const search  = (document.getElementById("filter-search")?.value || "").toLowerCase();
+  const folderId= parseInt(document.getElementById("filter-folder")?.value) || null;
+  const dept    = document.getElementById("filter-dept")?.value || "";
+  const loc     = document.getElementById("filter-loc")?.value  || "";
+  const sort    = document.getElementById("sort-select")?.value || "date-desc";
+
+  let data = docsData.filter(d => {
+    if(folderId && d.folder !== folderId) return false;
+    if(dept && d.dept !== dept) return false;
+    if(loc  && d.loc  !== loc)  return false;
+    if(search && !d.title.toLowerCase().includes(search) && !d.dept.toLowerCase().includes(search)) return false;
+    return true;
+  });
+
+  if(sort==="date-desc") data.sort((a,b)=>a.daysAgo-b.daysAgo);
+  if(sort==="date-asc")  data.sort((a,b)=>b.daysAgo-a.daysAgo);
+  if(sort==="name-asc")  data.sort((a,b)=>a.title.localeCompare(b.title));
+  if(sort==="name-desc") data.sort((a,b)=>b.title.localeCompare(a.title));
+  if(sort==="size-desc") data.sort((a,b)=>b.sizeMB-a.sizeMB);
+  if(sort==="size-asc")  data.sort((a,b)=>a.sizeMB-b.sizeMB);
+  if(sort==="dept")      data.sort((a,b)=>a.dept.localeCompare(b.dept));
+
+  if(currentView==='grid') renderDocsGrid(data);
+  else renderDocsList(data);
+}
+
+function setView(mode){
+  currentView = mode;
+  document.getElementById("btn-view-list").classList.toggle("active", mode==='list');
+  document.getElementById("btn-view-grid").classList.toggle("active", mode==='grid');
+  document.getElementById("docs-list-view").style.display = mode==='list' ? '' : 'none';
+  document.getElementById("docs-grid-view").style.display = mode==='grid' ? '' : 'none';
+  applyFilters();
+}
+
+function renderDocsList(data){
+  const listView = document.getElementById("docs-list-view");
+  const rows = listView.querySelectorAll(".table-row, .empty-msg");
+  rows.forEach(r=>r.remove());
+
+  if(!data.length){
+    const empty = document.createElement("div");
+    empty.className = "empty-msg";
+    empty.style = "padding:32px;text-align:center;color:#bbb;font-size:13px";
+    empty.textContent = "No hay documentos con estos filtros.";
+    listView.appendChild(empty);
+    return;
+  }
+  data.forEach(d=>{
+    const row = document.createElement("div");
+    row.className = "table-row";
+    row.innerHTML = `
+      <div class="doc-name-cell">
+        <div class="doc-icon-sm">${d.icon}</div>
+        <div>
+          <div class="doc-title">${d.title}${d.isNew?' <span class="new-tag">NUEVO</span>':''}</div>
+          <div class="doc-sub">Acceso: ${d.access}</div>
+        </div>
+      </div>
+      <div class="td">${d.loc}</div>
+      <div class="td"><span class="dept-tag ${d.deptClass}">${d.dept}</span></div>
+      <div class="td">${d.updated}</div>
+      <div class="action-btns">
+        <button class="btn-icon" title="Vista previa" onclick="showToast('Vista previa: ${d.title.replace(/'/g,"\\'")}')">👁</button>
+        <button class="btn-icon btn-edit" title="Editar">✏</button>
+        <button class="btn-icon btn-share" title="Compartir" onclick="openShareModal('${d.title.replace(/'/g,"\\'")}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>
+        <button class="btn-icon btn-del" title="Eliminar">🗑</button>
+      </div>`;
+    listView.appendChild(row);
+  });
+}
+
+function renderDocsGrid(data){
+  const grid = document.getElementById("docs-grid-view");
+  if(!data.length){
+    grid.innerHTML = '<div style="padding:32px;text-align:center;color:#bbb;font-size:13px">No hay documentos con estos filtros.</div>';
+    return;
+  }
+  grid.innerHTML = data.map(d=>`
+    <div class="doc-grid-card">
+      <div class="doc-grid-icon">${d.icon}</div>
+      <div class="doc-grid-title">${d.title}${d.isNew?' <span class="new-tag">NUEVO</span>':''}</div>
+      <div class="doc-grid-meta">${d.dept} · ${d.size} · ${d.updated}</div>
+      <div class="doc-grid-footer">
+        <span class="dept-tag ${d.deptClass}" style="font-size:10px">${d.dept}</span>
+        <div class="action-btns"><button class="btn-icon btn-edit">✏</button><button class="btn-icon btn-del">🗑</button></div>
+      </div>
+    </div>`).join('');
+}
+
+/* ── SHARE MODAL ─────────────────────────────────── */
+const SHARE_USERS = [
+  {id:1, initials:"CM", color:"#c0392b", name:"Carlos Martínez", role:"Mesero", loc:"Long Beach"},
+  {id:2, initials:"LR", color:"#2980b9", name:"Laura Ramírez",   role:"Gerente", loc:"Gulfport"},
+  {id:3, initials:"MP", color:"#27ae60", name:"Marco Pérez",     role:"Cocinero", loc:"Biloxi"},
+  {id:4, initials:"AG", color:"#8e44ad", name:"Ana García",      role:"Hostess", loc:"Long Beach"},
+  {id:5, initials:"RG", color:"#95a5a6", name:"Roberto Garza",   role:"Host",    loc:"Long Beach"},
+];
+let _shareChannels = new Set(['email']);
+let _selectedUsers = new Set();
+let _linkPerm = 'view';
+
+function openShareModal(title){
+  document.getElementById("share-doc-name").textContent = "📄 " + title;
+  _shareChannels = new Set(['email']);
+  _selectedUsers = new Set();
+  _linkPerm = 'view';
+  ['email','whatsapp','sms'].forEach(ch=>{
+    document.getElementById("ch-"+ch).classList.toggle("active", ch==='email');
+  });
+  ['view','download','edit'].forEach(p=>{
+    document.getElementById("perm-"+p).classList.toggle("active", p==='view');
+  });
+  switchShareTab('loc');
+  renderShareUsers('');
+  renderSelectedPills();
+  document.getElementById("share-modal-overlay").classList.add("open");
+}
+function closeShareModal(){
+  document.getElementById("share-modal-overlay").classList.remove("open");
+}
+function setLinkPerm(perm){
+  _linkPerm = perm;
+  ['view','download','edit'].forEach(p=>{
+    document.getElementById("perm-"+p).classList.toggle("active", p===perm);
+  });
+}
+function toggleChannel(ch){
+  const el = document.getElementById("ch-"+ch);
+  if(_shareChannels.has(ch)){ _shareChannels.delete(ch); el.classList.remove("active"); }
+  else { _shareChannels.add(ch); el.classList.add("active"); }
+}
+function switchShareTab(tab){
+  ['loc','dept','user'].forEach(t=>{
+    document.getElementById("stab-"+t).classList.toggle("active", t===tab);
+    document.getElementById("share-panel-"+t).style.display = t===tab ? '' : 'none';
+  });
+}
+function filterShareUsers(){
+  const q = document.getElementById("share-user-search").value;
+  renderShareUsers(q);
+}
+function renderShareUsers(q){
+  const list = document.getElementById("share-user-list");
+  const filtered = SHARE_USERS.filter(u=>
+    !q || u.name.toLowerCase().includes(q.toLowerCase()) || u.role.toLowerCase().includes(q.toLowerCase())
+  );
+  list.innerHTML = filtered.map(u=>`
+    <div class="share-user-row${_selectedUsers.has(u.id)?' selected':''}" onclick="toggleShareUser(${u.id})">
+      <div class="user-av" style="background:${u.color};width:30px;height:30px;font-size:11px;flex-shrink:0">${u.initials}</div>
+      <div style="flex:1"><div style="font-size:13px;font-weight:600;color:#111">${u.name}</div><div style="font-size:11px;color:#bbb">${u.role} · ${u.loc}</div></div>
+      ${_selectedUsers.has(u.id) ? '<span style="color:#c0392b;font-size:16px">✓</span>' : ''}
+    </div>`).join('');
+}
+function toggleShareUser(id){
+  if(_selectedUsers.has(id)) _selectedUsers.delete(id);
+  else _selectedUsers.add(id);
+  renderShareUsers(document.getElementById("share-user-search")?.value || '');
+  renderSelectedPills();
+}
+function renderSelectedPills(){
+  const el = document.getElementById("share-selected-users");
+  if(!el) return;
+  el.innerHTML = [..._selectedUsers].map(id=>{
+    const u = SHARE_USERS.find(x=>x.id===id);
+    return `<div class="share-user-pill">
+      <div class="user-av" style="background:${u.color};width:20px;height:20px;font-size:9px">${u.initials}</div>
+      ${u.name.split(' ')[0]}
+      <button onclick="toggleShareUser(${u.id})">×</button>
+    </div>`;
+  }).join('');
+}
+function sendShare(){
+  if(!_shareChannels.size){ showToast("Selecciona al menos un canal"); return; }
+  const expiry = document.getElementById("share-expiry")?.value;
+  const permLabel = {view:"solo ver", download:"descargar", edit:"editar"}[_linkPerm];
+  const expiryLabel = {never:"sin vencimiento","1d":"1 día","7d":"7 días","30d":"30 días","90d":"90 días"}[expiry];
+  closeShareModal();
+  showToast(`✓ Enlace generado · ${permLabel} · válido ${expiryLabel}`);
+}
+
+/* ── INIT ──────────────────────────────────────────── */
+renderFolders();
+applyFilters();
 </script>
 </body>
 </html>
